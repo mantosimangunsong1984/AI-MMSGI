@@ -25,3 +25,10 @@ logs/
 
 # VS Code
 .vscode/
+
+# Database
+storage/database/*.db
+
+# Python cache
+__pycache__/
+*.pyc
