@@ -1,0 +1,27 @@
+# Python virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# AI Model
+storage/models/
+
+# Embeddings hasil proses AI
+storage/embeddings/
+
+# Database runtime
+storage/database/
+
+# Dokumen internal
+storage/documents/
+
+# Logs
+logs/
+
+# Environment
+.env
+
+# VS Code
+.vscode/

@@ -1,0 +1,422 @@
+/* ==========================================================
+   MAIA - MMSGI AI Assistant
+   Sprint 1
+==========================================================*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:"Segoe UI",sans-serif;
+
+    background:#f4f7fb;
+
+    height:100vh;
+
+    overflow:hidden;
+
+}
+
+.app{
+
+    display:flex;
+
+    height:100vh;
+
+}
+
+/* =======================================
+SIDEBAR
+=======================================*/
+
+.sidebar{
+
+    width:260px;
+
+    background:#1E293B;
+
+    color:white;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:25px;
+
+    border-bottom:1px solid rgba(255,255,255,.1);
+
+}
+
+.logo-icon{
+
+    font-size:34px;
+
+}
+
+.logo h2{
+
+    font-size:22px;
+
+}
+
+.logo small{
+
+    color:#bfc9d4;
+
+}
+
+.new-chat-btn{
+
+    margin:20px;
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:14px;
+
+    cursor:pointer;
+
+    background:#0F62FE;
+
+    color:white;
+
+    font-size:15px;
+
+    transition:.25s;
+
+}
+
+.new-chat-btn:hover{
+
+    background:#0B52D6;
+
+}
+
+.search-box{
+
+    padding:0 20px 20px;
+
+}
+
+.search-box input{
+
+    width:100%;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:8px;
+
+}
+
+.history-list{
+
+    flex:1;
+
+    overflow:auto;
+
+    padding:0 20px;
+
+}
+
+.history-title{
+
+    font-size:13px;
+
+    color:#b8c2cc;
+
+    margin-bottom:10px;
+
+}
+
+.history-item{
+
+    padding:12px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    margin-bottom:5px;
+
+}
+
+.history-item:hover{
+
+    background:rgba(255,255,255,.08);
+
+}
+
+.history-item.active{
+
+    background:rgba(255,255,255,.12);
+
+}
+
+.sidebar-footer{
+
+    padding:20px;
+
+    border-top:1px solid rgba(255,255,255,.1);
+
+}
+
+.sidebar-footer div{
+
+    margin:10px 0;
+
+    cursor:pointer;
+
+}
+
+/* =======================================
+MAIN
+=======================================*/
+
+.main-content{
+
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.header{
+
+    height:70px;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 30px;
+
+    border-bottom:1px solid #e5e7eb;
+
+}
+
+.header h1{
+
+    font-size:24px;
+
+}
+
+.version{
+
+    color:#666;
+
+}
+
+/* =======================================
+CHAT
+=======================================*/
+
+.chat-box{
+
+    flex:1;
+
+    overflow:auto;
+
+    padding:35px;
+
+}
+
+.welcome{
+
+    max-width:700px;
+
+    margin:50px auto;
+
+    text-align:center;
+
+}
+
+.welcome-icon{
+
+    font-size:70px;
+
+    margin-bottom:20px;
+
+}
+
+.welcome h2{
+
+    margin-bottom:20px;
+
+}
+
+.welcome p{
+
+    color:#666;
+
+    margin-bottom:20px;
+
+}
+
+.welcome ul{
+
+    list-style:none;
+
+}
+
+.welcome li{
+
+    padding:10px;
+
+}
+
+.user-message{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    margin:20px 0;
+
+}
+
+.ai-message{
+
+    display:flex;
+
+    justify-content:flex-start;
+
+    margin:20px 0;
+
+}
+
+.bubble-user{
+
+    background:#0F62FE;
+
+    color:white;
+
+    padding:14px 18px;
+
+    border-radius:15px;
+
+    max-width:70%;
+
+    white-space:pre-wrap;
+
+}
+
+.bubble-ai{
+
+    background:white;
+
+    border-radius:15px;
+
+    padding:14px 18px;
+
+    max-width:70%;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+    white-space:pre-wrap;
+
+}
+
+/* =======================================
+INPUT
+=======================================*/
+
+.input-container{
+
+    background:white;
+
+    border-top:1px solid #e5e7eb;
+
+    padding:20px;
+
+}
+
+.input-wrapper{
+
+    display:flex;
+
+    gap:15px;
+
+    align-items:flex-end;
+
+}
+
+#question{
+
+    flex:1;
+
+    resize:none;
+
+    min-height:60px;
+
+    max-height:180px;
+
+    border:1px solid #ddd;
+
+    border-radius:12px;
+
+    padding:15px;
+
+    font-size:15px;
+
+    outline:none;
+
+}
+
+#send-btn{
+
+    width:60px;
+
+    height:60px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    background:#0F62FE;
+
+    color:white;
+
+    font-size:22px;
+
+}
+
+#send-btn:hover{
+
+    background:#0B52D6;
+
+}
+
+.input-note{
+
+    margin-top:10px;
+
+    color:#777;
+
+    font-size:13px;
+
+}

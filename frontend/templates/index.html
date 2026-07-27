@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>MAIA - MMSGI AI Assistant</title>
+
+    <link rel="stylesheet"
+          href="/static/css/style.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- ========================= -->
+    <!-- Sidebar -->
+    <!-- ========================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+
+                🤖
+
+            </div>
+
+            <div>
+
+                <h2>MAIA</h2>
+
+                <small>MMSGI AI Assistant</small>
+
+            </div>
+
+        </div>
+
+
+        <button id="new-chat"
+                class="new-chat-btn">
+
+            ＋ New Chat
+
+        </button>
+
+
+        <div class="search-box">
+
+            <input
+
+                id="search-chat"
+
+                type="text"
+
+                placeholder="Cari percakapan..."
+
+            >
+
+        </div>
+
+
+        <div
+            id="history-list"
+            class="history-list">
+
+            <div class="history-title">
+
+                Hari Ini
+
+            </div>
+
+            <div class="history-item active">
+
+                Chat Baru
+
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-footer">
+
+            <div>
+
+                ⚙ Settings
+
+            </div>
+
+            <div>
+
+                👤 User
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ========================= -->
+    <!-- Main -->
+    <!-- ========================= -->
+
+    <main class="main-content">
+
+
+        <!-- Header -->
+
+        <header class="header">
+
+            <div>
+
+                <h1>
+
+                    MAIA
+
+                </h1>
+
+                <small>
+
+                    MMSGI AI Assistant
+
+                </small>
+
+            </div>
+
+            <div class="version">
+
+                v1.0
+
+            </div>
+
+        </header>
+
+
+
+        <!-- Chat -->
+
+        <section
+
+            id="chat-box"
+
+            class="chat-box">
+
+            <div class="welcome">
+
+                <div class="welcome-icon">
+
+                    🤖
+
+                </div>
+
+                <h2>
+
+                    Selamat Datang di MAIA
+
+                </h2>
+
+                <p>
+
+                    Saya siap membantu Anda mencari informasi mengenai:
+
+                </p>
+
+                <ul>
+
+                    <li>📘 Employee Handbook</li>
+
+                    <li>📄 SOP</li>
+
+                    <li>📑 SK Direksi</li>
+
+                    <li>📚 Kebijakan</li>
+
+                    <li>📝 Prosedur</li>
+
+                </ul>
+
+                <div class="tips">
+
+                    Mulailah dengan mengetik pertanyaan di bawah.
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- Input -->
+
+        <footer class="input-container">
+
+            <div class="input-wrapper">
+
+                <textarea
+
+                    id="question"
+
+                    rows="1"
+
+                    placeholder="Tanyakan SOP, Employee Handbook, SK Direksi, Kebijakan..."
+
+                ></textarea>
+
+                <button
+
+                    id="send-btn">
+
+                    ➤
+
+                </button>
+
+            </div>
+
+            <div class="input-note">
+
+                Enter = Kirim &nbsp;&nbsp;&nbsp;
+
+                Shift + Enter = Baris Baru
+
+            </div>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<script src="/static/js/app.js"></script>
+
+</body>
+
+</html>
