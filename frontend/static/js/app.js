@@ -1,4 +1,7 @@
-let currentConversationId = null;
+window.currentConversationId =
+    localStorage.getItem(
+        "maia_current_conversation"
+    );
 
 
 const sendButton = document.getElementById("send-btn");
@@ -91,7 +94,15 @@ async function createChatFromInput() {
     const data = await response.json();
 
 
-    currentConversationId = data.conversation_id;
+    // window.currentConversationId = data.conversation_id;
+    window.currentConversationId =
+    data.conversation_id;
+
+
+    localStorage.setItem(
+        "maia_current_conversation",
+        data.conversation_id
+    );
 
 
     chatBox.innerHTML = "";
@@ -99,7 +110,7 @@ async function createChatFromInput() {
 
     console.log(
         "New Conversation:",
-        currentConversationId
+        window.currentConversationId
     );
 
 }
@@ -124,10 +135,15 @@ async function sendMessage() {
     // Jika belum ada chat
     // otomatis buat conversation baru
 
-    if (currentConversationId === null) {
+    if (window.currentConversationId === null) {
 
         // await createNewChat();
         await createChatFromInput();
+
+            console.log(
+        "AFTER CREATE CHAT ID:",
+        window.currentConversationId
+        );
 
     }
 
@@ -149,7 +165,7 @@ async function sendMessage() {
 
     <div id="${loadingId}" class="ai-message">
 
-        <div class="bubble-ai">
+        <div class="bubble-loading">
 
             ⏳ MAIA sedang berpikir...
 
@@ -166,7 +182,7 @@ async function sendMessage() {
 
         const response = await fetch(
 
-            `/api/chat/${currentConversationId}`,
+            `/api/chat/${window.currentConversationId}`,
 
             {
 

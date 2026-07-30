@@ -265,3 +265,27 @@ INPUT
     font-size:13px;
 
 }
+
+/* =======================================
+   AI Loading Bubble
+======================================= */
+
+.bubble-loading{
+
+    background:white;
+
+    border-radius:15px;
+
+    padding:10px 15px;
+
+    max-width:max-content;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+    font-size:14px;
+
+    color:#666;
+
+    white-space:nowrap;
+
+}

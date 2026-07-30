@@ -94,8 +94,18 @@ async function createNewChat() {
         activeConversationId =
             data.conversation_id;
 
-        window.currentConversationId =
-            data.conversation_id;
+            window.currentConversationId =
+                data.conversation_id;
+
+
+            localStorage.setItem(
+                "maia_current_conversation",
+                data.conversation_id
+            );
+
+
+        // window.currentConversationId =
+        //     data.conversation_id;
 
         const chatBox =
             document.getElementById("chat-box");

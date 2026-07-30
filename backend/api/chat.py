@@ -23,6 +23,9 @@ chat_history = ChatHistoryService()
 class ChatRequest(BaseModel):
     message: str
 
+class RenameRequest(BaseModel):
+    title: str
+
 
 class ChatResponse(BaseModel):
     conversation_id: int
@@ -188,4 +191,50 @@ async def delete_conversation(
     return {
         "success": True,
         "message": "Conversation berhasil dihapus."
+    }
+
+# ======================================================
+# Rename Conversation
+# ======================================================
+
+@router.put("/conversation/{conversation_id}")
+async def rename_conversation(
+    conversation_id: int,
+    request: RenameRequest
+):
+
+    conversation = chat_history.get_conversation(
+        conversation_id
+    )
+
+
+    if conversation is None:
+
+        raise HTTPException(
+            status_code=404,
+            detail="Conversation tidak ditemukan."
+        )
+
+
+    title = request.title.strip()
+
+
+    if title == "":
+
+        raise HTTPException(
+            status_code=400,
+            detail="Title tidak boleh kosong."
+        )
+
+
+    chat_history.update_title(
+        conversation_id,
+        title
+    )
+
+
+    return {
+        "success": True,
+        "message": "Conversation berhasil diubah.",
+        "title": title
     }
