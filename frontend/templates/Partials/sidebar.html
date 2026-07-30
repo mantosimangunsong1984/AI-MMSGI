@@ -1,14 +1,16 @@
 <aside class="sidebar">
 
+    <!-- ==========================================
+         SIDEBAR HEADER
+    =========================================== -->
+
     <div class="sidebar-header">
 
         <div class="logo-circle">
-
             🤖
-
         </div>
 
-        <div>
+        <div class="logo-info">
 
             <h2>MAIA</h2>
 
@@ -18,50 +20,76 @@
 
     </div>
 
-    <button class="new-chat">
+
+
+    <!-- ==========================================
+         NEW CHAT
+    =========================================== -->
+
+    <button
+        id="new-chat-btn"
+        class="new-chat-btn">
 
         + New Chat
 
     </button>
 
+
+
+    <!-- ==========================================
+         SEARCH
+    =========================================== -->
+
     <div class="search-box">
 
         <input
+            id="search-chat"
             type="text"
-            placeholder="Cari chat..."
-        >
+            placeholder="Cari chat...">
 
     </div>
+
+
+
+    <!-- ==========================================
+         HISTORY
+    =========================================== -->
 
     <div class="history">
 
-        <h3>Hari Ini</h3>
+        <div class="history-header">
 
-        <div class="history-item">
-
-            📄 Employee Handbook
+            Riwayat Chat
 
         </div>
 
-        <div class="history-item">
-
-            📘 SOP IT
-
-        </div>
-
-        <div class="history-item">
-
-            ⚖ Kebijakan HR
+        <div
+            id="chat-history"
+            class="history-list">
 
         </div>
 
     </div>
 
+
+
+    <!-- ==========================================
+         FOOTER
+    =========================================== -->
+
     <div class="sidebar-footer">
 
-        <div>⚙ Settings</div>
+        <div class="sidebar-menu">
 
-        <div>ℹ About</div>
+            ⚙ Settings
+
+        </div>
+
+        <div class="sidebar-menu">
+
+            ℹ About
+
+        </div>
 
     </div>
 

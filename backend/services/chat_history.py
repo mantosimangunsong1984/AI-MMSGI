@@ -15,14 +15,13 @@ class ChatHistoryService:
             "storage/database/maia_chat.db"
         )
 
-        # Pastikan folder database tersedia
         self.db_path.parent.mkdir(
             parents=True,
             exist_ok=True
         )
 
-
         self.create_tables()
+
 
 
     # ======================================================
@@ -32,8 +31,7 @@ class ChatHistoryService:
     def connect(self):
 
         return sqlite3.connect(
-            self.db_path
-        )
+            self.db_path)
 
 
 
@@ -47,7 +45,6 @@ class ChatHistoryService:
         cursor = conn.cursor()
 
 
-        # Conversation Table
         cursor.execute(
             """
             CREATE TABLE IF NOT EXISTS conversations
@@ -60,7 +57,6 @@ class ChatHistoryService:
         )
 
 
-        # Message Table
         cursor.execute(
             """
             CREATE TABLE IF NOT EXISTS messages
@@ -134,7 +130,6 @@ class ChatHistoryService:
         content: str
     ):
 
-
         conn = self.connect()
         cursor = conn.cursor()
 
@@ -172,7 +167,6 @@ class ChatHistoryService:
         self,
         conversation_id: int
     ):
-
 
         conn = self.connect()
         cursor = conn.cursor()
@@ -218,3 +212,170 @@ class ChatHistoryService:
 
 
         return messages
+
+
+
+    # ======================================================
+    # Get All Conversations
+    # ======================================================
+
+    def get_conversations(self):
+
+        conn = self.connect()
+        cursor = conn.cursor()
+
+
+        cursor.execute(
+            """
+            SELECT
+                id,
+                title,
+                created_at
+
+            FROM conversations
+
+            ORDER BY id DESC
+            """
+        )
+
+
+        rows = cursor.fetchall()
+
+
+        conn.close()
+
+
+        conversations = []
+
+
+        for row in rows:
+
+            conversations.append(
+                {
+                    "id": row[0],
+                    "title": row[1],
+                    "created_at": row[2]
+                }
+            )
+
+
+        return conversations
+
+
+
+    # ======================================================
+    # Get Conversation
+    # ======================================================
+
+    def get_conversation(
+        self,
+        conversation_id: int
+    ):
+
+        conn = self.connect()
+        cursor = conn.cursor()
+
+
+        cursor.execute(
+            """
+            SELECT
+                id,
+                title,
+                created_at
+
+            FROM conversations
+
+            WHERE id=?
+            """,
+            (
+                conversation_id,
+            )
+        )
+
+
+        row = cursor.fetchone()
+
+
+        conn.close()
+
+
+        return row
+
+
+
+    # ======================================================
+    # Update Conversation Title
+    # ======================================================
+
+    def update_title(
+        self,
+        conversation_id: int,
+        title: str
+    ):
+
+        conn = self.connect()
+        cursor = conn.cursor()
+
+
+        cursor.execute(
+            """
+            UPDATE conversations
+            SET title=?
+            WHERE id=?
+            """,
+            (
+                title,
+                conversation_id
+            )
+        )
+
+
+        conn.commit()
+        conn.close()
+
+
+
+    # ======================================================
+    # Delete Conversation
+    # ======================================================
+
+    def delete_conversation(
+        self,
+        conversation_id: int
+    ):
+
+        conn = self.connect()
+        cursor = conn.cursor()
+
+
+        # Hapus seluruh message
+
+        cursor.execute(
+            """
+            DELETE FROM messages
+            WHERE conversation_id=?
+            """,
+            (
+                conversation_id,
+            )
+        )
+
+
+        # Hapus conversation
+
+        cursor.execute(
+            """
+            DELETE FROM conversations
+            WHERE id=?
+            """,
+            (
+                conversation_id,
+            )
+        )
+
+
+        conn.commit()
+        conn.close()
+
+
+        return True

@@ -10,8 +10,14 @@
 
     <title>MAIA - MMSGI AI Assistant</title>
 
-    <link rel="stylesheet"
-          href="/static/css/style.css">
+    <!-- <link rel="stylesheet"
+          href="/static/css/style.css"> -->
+
+          <link rel="stylesheet"
+      href="/static/css/style.css">
+
+        <link rel="stylesheet"
+      href="/static/css/sidebar.css">
 
 </head>
 
@@ -19,18 +25,16 @@
 
 <div class="app">
 
-    <!-- ========================= -->
+    <!-- ========================================= -->
     <!-- Sidebar -->
-    <!-- ========================= -->
+    <!-- ========================================= -->
 
     <aside class="sidebar">
 
         <div class="logo">
 
             <div class="logo-icon">
-
                 🤖
-
             </div>
 
             <div>
@@ -44,12 +48,15 @@
         </div>
 
 
-        <button id="new-chat"
-                class="new-chat-btn">
+
+        <button
+            id="new-chat-btn"
+            class="new-chat-btn">
 
             ＋ New Chat
 
         </button>
+
 
 
         <div class="search-box">
@@ -67,23 +74,13 @@
         </div>
 
 
+
         <div
-            id="history-list"
+            id="chat-history"
             class="history-list">
 
-            <div class="history-title">
-
-                Hari Ini
-
-            </div>
-
-            <div class="history-item active">
-
-                Chat Baru
-
-            </div>
-
         </div>
+
 
 
         <div class="sidebar-footer">
@@ -106,9 +103,9 @@
 
 
 
-    <!-- ========================= -->
+    <!-- ========================================= -->
     <!-- Main -->
-    <!-- ========================= -->
+    <!-- ========================================= -->
 
     <main class="main-content">
 
@@ -226,7 +223,6 @@
             <div class="input-note">
 
                 Enter = Kirim &nbsp;&nbsp;&nbsp;
-
                 Shift + Enter = Baris Baru
 
             </div>
@@ -238,7 +234,10 @@
 </div>
 
 
+<!-- JavaScript -->
+
 <script src="/static/js/app.js"></script>
+<script src="/static/js/sidebar.js"></script>
 
 </body>
 

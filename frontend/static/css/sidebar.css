@@ -1,0 +1,389 @@
+/* ======================================================
+   MAIA SIDEBAR
+   Sprint 2.3 Stable
+====================================================== */
+
+/* ===============================
+   SIDEBAR
+================================ */
+
+.sidebar{
+
+    width:260px;
+    height:100vh;
+
+    background:#1E293B;
+    color:#FFFFFF;
+
+    display:flex;
+    flex-direction:column;
+
+    border-right:1px solid rgba(255,255,255,.08);
+
+}
+
+
+/* ===============================
+   HEADER
+================================ */
+
+.sidebar-header{
+
+    display:flex;
+    align-items:center;
+    gap:14px;
+
+    padding:24px 20px;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+}
+
+.logo-circle{
+
+    width:48px;
+    height:48px;
+
+    border-radius:50%;
+
+    background:#0F62FE;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:22px;
+
+}
+
+.logo-info h2{
+
+    font-size:20px;
+    margin:0;
+
+}
+
+.logo-info span{
+
+    font-size:12px;
+    color:#C7D2FE;
+
+}
+
+
+/* ===============================
+   NEW CHAT
+================================ */
+
+.new-chat-btn{
+
+    margin:18px;
+
+    height:46px;
+
+    border:none;
+    border-radius:10px;
+
+    background:#0F62FE;
+    color:#FFFFFF;
+
+    font-size:15px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.new-chat-btn:hover{
+
+    background:#0B52D6;
+
+}
+
+
+/* ===============================
+   SEARCH
+================================ */
+
+.search-box{
+
+    padding:0 18px 15px;
+
+}
+
+.search-box input{
+
+    width:100%;
+
+    padding:11px 14px;
+
+    border:none;
+    outline:none;
+
+    border-radius:8px;
+
+    background:#334155;
+
+    color:#FFFFFF;
+
+}
+
+.search-box input::placeholder{
+
+    color:#CBD5E1;
+
+}
+
+
+/* ===============================
+   HISTORY
+================================ */
+
+.history{
+
+    flex:1;
+
+    display:flex;
+    flex-direction:column;
+
+    overflow:hidden;
+
+}
+
+.history-header{
+
+    padding:0 18px 10px;
+
+    font-size:13px;
+
+    color:#CBD5E1;
+
+    font-weight:bold;
+
+}
+
+.history-list{
+
+    flex:1;
+
+    overflow-y:auto;
+
+}
+
+
+/* ===============================
+   HISTORY ROW
+================================ */
+
+.history-row{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:8px;
+
+    margin:2px 8px;
+
+    padding:10px 12px;
+
+    border-radius:8px;
+
+    transition:.2s;
+
+}
+
+.history-row:hover{
+
+    background:rgba(255,255,255,.08);
+
+}
+
+
+/* ===============================
+   ACTIVE CHAT
+================================ */
+
+.history-row.active{
+
+    background:#334155;
+
+}
+
+
+/* ===============================
+   CHAT TITLE
+================================ */
+
+.history-text{
+
+    flex:1;
+
+    color:#FFFFFF;
+
+    overflow:hidden;
+
+    white-space:nowrap;
+
+    text-overflow:ellipsis;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+}
+
+
+/* ===============================
+   MENU BUTTON
+================================ */
+
+.menu-button{
+
+    width:30px;
+
+    height:30px;
+
+    border:none;
+
+    border-radius:6px;
+
+    background:transparent;
+
+    color:#FFFFFF;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    opacity:0;
+
+    transition:.15s;
+
+}
+
+.history-row:hover .menu-button{
+
+    opacity:1;
+
+}
+
+.menu-button:hover{
+
+    background:rgba(255,255,255,.12);
+
+}
+
+
+/* ===============================
+   POPUP MENU
+================================ */
+
+.menu-popup{
+
+    position:fixed;
+
+    width:160px;
+
+    background:#FFFFFF;
+
+    border-radius:8px;
+
+    box-shadow:0 8px 24px rgba(0,0,0,.25);
+
+    overflow:hidden;
+
+    border:1px solid #E5E7EB;
+
+    z-index:99999;
+
+}
+
+
+/* ===============================
+   DELETE BUTTON
+================================ */
+
+.menu-delete{
+
+    padding:12px 16px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:#DC2626;
+
+    background:#FFFFFF;
+
+    transition:.15s;
+
+}
+
+.menu-delete:hover{
+
+    background:#F3F4F6;
+
+}
+
+
+/* ===============================
+   FOOTER
+================================ */
+
+.sidebar-footer{
+
+    padding:16px;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+}
+
+.sidebar-menu{
+
+    padding:10px 12px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.sidebar-menu:hover{
+
+    background:rgba(255,255,255,.08);
+
+}
+
+
+/* ===============================
+   SCROLLBAR
+================================ */
+
+.history-list::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+.history-list::-webkit-scrollbar-thumb{
+
+    background:#475569;
+
+    border-radius:10px;
+
+}
+
+.history-list::-webkit-scrollbar-track{
+
+    background:transparent;
+
+}

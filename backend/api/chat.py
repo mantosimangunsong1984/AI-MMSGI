@@ -29,7 +29,6 @@ class ChatResponse(BaseModel):
     answer: str
 
 
-
 # ======================================================
 # Create New Chat
 # ======================================================
@@ -42,7 +41,6 @@ async def new_chat():
     return {
         "conversation_id": conversation_id
     }
-
 
 
 # ======================================================
@@ -69,7 +67,23 @@ async def chat(
 
 
     # ==================================================
-    # Simpan pertanyaan user
+    # Pastikan Conversation Ada
+    # ==================================================
+
+    conversation = chat_history.get_conversation(
+        conversation_id
+    )
+
+    if conversation is None:
+
+        raise HTTPException(
+            status_code=404,
+            detail="Conversation tidak ditemukan."
+        )
+
+
+    # ==================================================
+    # Simpan Pertanyaan User
     # ==================================================
 
     chat_history.save_message(
@@ -80,13 +94,12 @@ async def chat(
 
 
     # ==================================================
-    # Kirim ke RAG + AI Engine
+    # Kirim ke AI
     # ==================================================
 
     result = rag.ask(
         request.message
     )
-
 
     answer = result["answer"]
 
@@ -97,9 +110,8 @@ async def chat(
     print()
 
 
-
     # ==================================================
-    # Simpan jawaban AI
+    # Simpan Jawaban AI
     # ==================================================
 
     chat_history.save_message(
@@ -113,7 +125,6 @@ async def chat(
         conversation_id=conversation_id,
         answer=answer
     )
-
 
 
 # ======================================================
@@ -132,4 +143,49 @@ async def history(
     return {
         "conversation_id": conversation_id,
         "messages": messages
+    }
+
+
+# ======================================================
+# Get All Conversations
+# ======================================================
+
+@router.get("/conversations")
+async def conversations():
+
+    data = chat_history.get_conversations()
+
+    return {
+        "conversations": data
+    }
+
+
+# ======================================================
+# Delete Conversation
+# ======================================================
+
+@router.delete("/conversation/{conversation_id}")
+async def delete_conversation(
+    conversation_id: int
+):
+
+    conversation = chat_history.get_conversation(
+        conversation_id
+    )
+
+    if conversation is None:
+
+        raise HTTPException(
+            status_code=404,
+            detail="Conversation tidak ditemukan."
+        )
+
+
+    chat_history.delete_conversation(
+        conversation_id
+    )
+
+    return {
+        "success": True,
+        "message": "Conversation berhasil dihapus."
     }
