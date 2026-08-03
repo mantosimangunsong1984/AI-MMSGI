@@ -3,7 +3,7 @@
    Sprint 2.3 Stable
 ====================================================== */
 
-console.log("MAIA Sidebar Sprint 2.3 Loaded");
+console.log("EVE Sidebar Sprint 2.3 Loaded");
 
 const historyContainer = document.getElementById("chat-history");
 const newChatButton = document.getElementById("new-chat-btn");

@@ -3,25 +3,6 @@
    Sprint 2.3 Stable
 ====================================================== */
 
-/* ===============================
-   SIDEBAR
-================================ */
-
-.sidebar{
-
-    width:260px;
-    height:100vh;
-
-    background:#1E293B;
-    color:#FFFFFF;
-
-    display:flex;
-    flex-direction:column;
-
-    border-right:1px solid rgba(255,255,255,.08);
-
-}
-
 
 /* ===============================
    HEADER
@@ -385,5 +366,191 @@
 .history-list::-webkit-scrollbar-track{
 
     background:transparent;
+
+}
+
+/* ======================================================
+   EVE FINAL SIDEBAR LAYOUT
+====================================================== */
+
+
+.sidebar {
+
+    width:260px;
+
+    height:100vh;
+
+    background:#1E293B;
+
+    color:white;
+
+    display:flex;
+
+    flex-direction:column;
+
+    flex-shrink:0;
+
+}
+
+
+
+/* LOGO */
+
+.logo {
+
+    width:100%;
+
+    height:110px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:20px;
+
+    flex-shrink:0;
+
+    border-bottom:1px solid rgba(255,255,255,.1);
+
+}
+
+
+
+.logo-image {
+
+    width:150px;
+
+    max-height:70px;
+
+    height:auto;
+
+    display:block;
+
+    object-fit:contain;
+
+}
+
+
+
+/* NEW CHAT */
+
+.new-chat-btn {
+
+    width:calc(100% - 36px);
+
+    margin:18px;
+
+    flex-shrink:0;
+
+}
+
+
+
+/* SEARCH */
+
+.search-box {
+
+    flex-shrink:0;
+
+}
+
+
+
+/* HISTORY */
+
+.history-list {
+
+    flex:1;
+
+    overflow-y:auto;
+
+}
+
+
+
+/* FOOTER */
+
+.sidebar-footer {
+
+    flex-shrink:0;
+
+}
+
+
+/* ======================================================
+   EVE SIDEBAR FINAL LAYOUT FIX
+====================================================== */
+
+.sidebar {
+
+    width:260px !important;
+
+    height:100vh !important;
+
+    display:flex !important;
+
+    flex-direction:column !important;
+
+    background:#1E293B !important;
+
+    color:white;
+
+}
+
+
+.logo {
+
+    width:100% !important;
+
+    display:flex !important;
+
+    justify-content:center !important;
+
+    align-items:center !important;
+
+    flex:none !important;
+
+}
+
+
+.logo-image {
+
+    width:120px !important;
+
+    height:auto !important;
+
+    display:block !important;
+
+}
+
+
+.new-chat-btn {
+
+    flex:none !important;
+
+}
+
+
+.search-box {
+
+    flex:none !important;
+
+}
+
+
+.history-list {
+
+    flex:1 !important;
+
+    overflow-y:auto !important;
+
+}
+
+
+.sidebar-footer {
+
+    flex:none !important;
 
 }

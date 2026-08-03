@@ -1,6 +1,6 @@
 window.currentConversationId =
     localStorage.getItem(
-        "maia_current_conversation"
+        "eve_current_conversation"
     );
 
 
@@ -100,7 +100,7 @@ async function createChatFromInput() {
 
 
     localStorage.setItem(
-        "maia_current_conversation",
+        "eve_current_conversation",
         data.conversation_id
     );
 

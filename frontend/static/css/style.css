@@ -98,11 +98,57 @@ CHAT
 
 }
 
-.welcome-icon{
+/* =====================================
+   EVE WELCOME LOGO
+===================================== */
 
-    font-size:70px;
+/* =====================================
+   EVE WELCOME LOGO FINAL SIZE
+===================================== */
+
+.welcome-icon {
+
+    width:100%;
+
+    height:90px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
 
     margin-bottom:20px;
+
+}
+
+
+.welcome-icon img {
+
+    width:70px !important;
+
+    height:70px !important;
+
+    max-width:70px !important;
+
+    max-height:70px !important;
+
+    object-fit:contain;
+
+    display:block;
+
+}
+
+
+.welcome-icon img {
+
+    width:100px;
+
+    height:100px;
+
+    object-fit:contain;
+
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,.15));
 
 }
 
@@ -287,5 +333,55 @@ INPUT
     color:#666;
 
     white-space:nowrap;
+
+}
+
+
+.logo {
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:25px 20px;
+
+    flex-shrink:0;
+
+}
+
+
+.logo-image {
+
+    width:130px;
+
+    height:auto;
+
+    display:block;
+
+}
+
+.new-chat-btn{
+
+    width:calc(100% - 40px);
+
+    margin:20px;
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:14px;
+
+    cursor:pointer;
+
+    background:#0F62FE;
+
+    color:white;
+
+    font-size:15px;
 
 }

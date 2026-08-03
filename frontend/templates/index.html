@@ -8,22 +8,26 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>MAIA - MMSGI AI Assistant</title>
+    <title>EVE - Enterprise Virtual Expert</title>
 
-    <!-- <link rel="stylesheet"
-          href="/static/css/style.css"> -->
 
-          <link rel="stylesheet"
-      href="/static/css/style.css">
+    <link rel="stylesheet"
+          href="/static/css/style.css">
 
-        <link rel="stylesheet"
-      href="/static/css/sidebar.css">
+
+    <link rel="stylesheet"
+          href="/static/css/sidebar.css">
+
 
 </head>
 
+
 <body>
 
+
 <div class="app">
+
+
 
     <!-- ========================================= -->
     <!-- Sidebar -->
@@ -31,35 +35,50 @@
 
     <aside class="sidebar">
 
+
+
+        <!-- LOGO MMSGI -->
+
         <div class="logo">
 
-            <div class="logo-icon">
-                🤖
-            </div>
 
-            <div>
+            <img
 
-                <h2>MAIA</h2>
+                src="/static/images/logo.png"
 
-                <small>MMSGI AI Assistant</small>
+                alt="MMSGI Logo"
 
-            </div>
+                class="logo-image">
+
 
         </div>
 
 
 
+
+
+        <!-- NEW CHAT -->
+
         <button
+
             id="new-chat-btn"
+
             class="new-chat-btn">
 
+
             ＋ New Chat
+
 
         </button>
 
 
 
+
+
+        <!-- SEARCH -->
+
         <div class="search-box">
+
 
             <input
 
@@ -67,80 +86,122 @@
 
                 type="text"
 
-                placeholder="Cari percakapan..."
+                placeholder="Cari percakapan...">
 
-            >
 
         </div>
 
 
+
+
+
+        <!-- HISTORY -->
 
         <div
+
             id="chat-history"
+
             class="history-list">
+
 
         </div>
 
 
+
+
+
+        <!-- FOOTER -->
 
         <div class="sidebar-footer">
 
-            <div>
+
+            <div class="sidebar-menu">
+
 
                 ⚙ Settings
 
+
             </div>
 
-            <div>
+
+
+            <div class="sidebar-menu">
+
 
                 👤 User
 
+
             </div>
 
+
+
         </div>
+
+
 
     </aside>
 
 
 
+
+
+
     <!-- ========================================= -->
-    <!-- Main -->
+    <!-- Main Content -->
     <!-- ========================================= -->
+
 
     <main class="main-content">
 
 
-        <!-- Header -->
+
+
+
+        <!-- HEADER -->
 
         <header class="header">
 
+
             <div>
+
 
                 <h1>
 
-                    MAIA
+                    EVE
 
                 </h1>
 
+
                 <small>
 
-                    MMSGI AI Assistant
+                    Enterprise Virtual Expert
 
                 </small>
 
+
             </div>
+
+
 
             <div class="version">
 
+
                 v1.0
 
+
             </div>
+
+
 
         </header>
 
 
 
-        <!-- Chat -->
+
+
+
+        <!-- CHAT AREA -->
+
 
         <section
 
@@ -148,57 +209,104 @@
 
             class="chat-box">
 
+
+
             <div class="welcome">
+
 
                 <div class="welcome-icon">
 
-                    🤖
+                    <img
+                        src="/static/images/eve.png"
+                        alt="EVE Logo">
 
                 </div>
+
+
 
                 <h2>
 
-                    Selamat Datang di MAIA
+
+                    Selamat Datang di EVE
+
 
                 </h2>
 
+
+
                 <p>
+
 
                     Saya siap membantu Anda mencari informasi mengenai:
 
+
                 </p>
+
+
 
                 <ul>
 
-                    <li>📘 Employee Handbook</li>
 
-                    <li>📄 SOP</li>
+                    <li>
+                        📘 Employee Handbook
+                    </li>
 
-                    <li>📑 SK Direksi</li>
 
-                    <li>📚 Kebijakan</li>
+                    <li>
+                        📄 SOP
+                    </li>
 
-                    <li>📝 Prosedur</li>
+
+                    <li>
+                        📑 SK Direksi
+                    </li>
+
+
+                    <li>
+                        📚 Kebijakan
+                    </li>
+
+
+                    <li>
+                        📝 Prosedur
+                    </li>
+
 
                 </ul>
 
+
+
                 <div class="tips">
+
 
                     Mulailah dengan mengetik pertanyaan di bawah.
 
+
                 </div>
 
+
+
             </div>
+
+
 
         </section>
 
 
 
-        <!-- Input -->
+
+
+
+        <!-- INPUT -->
+
 
         <footer class="input-container">
 
+
+
             <div class="input-wrapper">
+
+
 
                 <textarea
 
@@ -206,39 +314,75 @@
 
                     rows="1"
 
-                    placeholder="Tanyakan SOP, Employee Handbook, SK Direksi, Kebijakan..."
+                    placeholder="Tanyakan SOP, Employee Handbook, SK Direksi, Kebijakan...">
 
-                ></textarea>
+
+                </textarea>
+
+
+
+
 
                 <button
 
                     id="send-btn">
 
+
                     ➤
+
 
                 </button>
 
+
+
+
             </div>
+
+
+
+
 
             <div class="input-note">
 
+
                 Enter = Kirim &nbsp;&nbsp;&nbsp;
+
                 Shift + Enter = Baris Baru
+
+
 
             </div>
 
+
+
+
         </footer>
 
+
+
+
     </main>
+
+
+
+
 
 </div>
 
 
+
+
+
 <!-- JavaScript -->
 
+
 <script src="/static/js/app.js"></script>
+
 <script src="/static/js/sidebar.js"></script>
 
+
+
 </body>
+
 
 </html>
