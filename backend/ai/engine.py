@@ -17,7 +17,7 @@ class AIEngine:
     def __init__(self):
 
         print("=" * 60)
-        print("MAIA AI ENGINE")
+        print("EVE AI ENGINE")
         print("=" * 60)
 
         model_path = ModelManager.get_model_path()
@@ -62,7 +62,7 @@ class AIEngine:
 
         elapsed = round(time.time() - start_time, 2)
 
-        logger.info(f"MAIA : {answer}")
+        logger.info(f"EVE : {answer}")
         logger.info(f"Response Time : {elapsed} sec")
 
         return answer
@@ -74,25 +74,62 @@ class AIEngine:
             messages=[
                 {
                     "role": "system",
-                    "content": (
-                        "Kamu adalah MAIA, AI Assistant internal MMS Group Indonesia.\n"
-                        "Jawablah HANYA berdasarkan konteks yang diberikan.\n"
-                        "Jika jawaban tidak ada pada konteks, katakan:\n"
-                        "'Maaf, informasi tersebut tidak ditemukan pada dokumen yang tersedia.'\n"
-                        "Jangan membuat informasi yang tidak terdapat pada konteks."
-                    )
+                    "content": """
+    Kamu adalah EVE (Enterprise Virtual Expert), AI Assistant internal MMS Group Indonesia.
+
+    Tugasmu adalah menjawab pertanyaan HANYA berdasarkan dokumen yang diberikan.
+
+    ATURAN:
+
+    1. Gunakan HANYA informasi pada CONTEXT.
+
+    2. Jangan menggunakan pengetahuan umum.
+
+    3. Jangan mengarang jawaban.
+
+    4. Jika terdapat beberapa dokumen, prioritaskan dokumen yang paling relevan dengan pertanyaan.
+
+    5. Bila konteks memuat beberapa bagian seperti:
+    - Tujuan
+    - Cakupan
+    - Definisi
+    - Kebijakan
+    - Persyaratan
+    - Prosedur
+    - Ketentuan
+    - Hak
+    - Kewajiban
+
+    maka rangkum seluruh informasi penting tersebut.
+
+    6. Jangan hanya mengambil satu kalimat jika masih ada informasi yang berkaitan pada konteks.
+
+    7. Jika informasi tidak ditemukan pada konteks, jawab persis:
+
+    "Maaf, informasi tersebut tidak ditemukan pada dokumen yang tersedia."
+
+    8. Jawablah menggunakan Bahasa Indonesia yang profesional.
+
+    9. Jangan menyebutkan informasi yang tidak ada pada konteks.
+    """
                 },
                 {
                     "role": "user",
                     "content": f"""
-KONTEKS:
+    CONTEXT
 
-{context}
+    {context}
 
-PERTANYAAN:
+    ====================================
 
-{question}
-"""
+    PERTANYAAN
+
+    {question}
+
+    ====================================
+
+    Jawablah hanya berdasarkan CONTEXT di atas.
+    """
                 }
             ],
             temperature=0.2,

@@ -56,10 +56,11 @@ VECTOR_INDEX = EMBEDDING_DIR / "maia.index"
 
 VECTOR_METADATA = EMBEDDING_DIR / "metadata.pkl"
 
+
 # ==========================================================
 # CHUNK SETTINGS
 # ==========================================================
 
-CHUNK_SIZE = 800
+CHUNK_SIZE = 1200
 
-CHUNK_OVERLAP = 200
+CHUNK_OVERLAP = 150

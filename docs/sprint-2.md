@@ -2,7 +2,7 @@
 
 ## Objective
 
-Meningkatkan kemampuan MAIA sebagai AI Assistant internal MMSGI.
+Meningkatkan kemampuan EVE sebagai AI Assistant internal MMSGI.
 
 ## Scope
 

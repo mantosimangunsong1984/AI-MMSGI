@@ -1,9 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-
-from backend.services.rag_service import RAGService
+from backend.core.rag_instance import rag
 from backend.services.chat_history import ChatHistoryService
-
 
 router = APIRouter()
 
@@ -12,7 +10,6 @@ router = APIRouter()
 # Load Service sekali saat aplikasi dijalankan
 # ======================================================
 
-rag = RAGService()
 chat_history = ChatHistoryService()
 
 
@@ -101,9 +98,9 @@ async def chat(
     # ==================================================
 
     result = rag.ask(
-        request.message
+        request.message,
+        top_k=3
     )
-
     answer = result["answer"]
 
 

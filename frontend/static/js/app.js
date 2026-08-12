@@ -167,7 +167,7 @@ async function sendMessage() {
 
         <div class="bubble-loading">
 
-            ⏳ MAIA sedang berpikir...
+            ⏳ EVE sedang berpikir...
 
         </div>
 
@@ -237,7 +237,7 @@ async function sendMessage() {
 
 
         addAIMessage(
-            "Gagal menghubungi MAIA."
+            "Gagal menghubungi EVE."
         );
 
 

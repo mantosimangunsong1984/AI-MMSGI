@@ -1,5 +1,5 @@
 /* ======================================================
-   MAIA SIDEBAR
+   EVE SIDEBAR
    Sprint 2.3 Stable
 ====================================================== */
 
@@ -99,7 +99,7 @@ async function createNewChat() {
 
 
             localStorage.setItem(
-                "maia_current_conversation",
+                "eve_current_conversation",
                 data.conversation_id
             );
 

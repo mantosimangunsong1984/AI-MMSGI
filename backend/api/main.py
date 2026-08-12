@@ -3,11 +3,13 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from backend.api.admin import router as admin_router
+from backend.api.documents import router as document_router
+
 
 from backend.api.chat import router as chat_router
 
 app = FastAPI(
-    title="MAIA"
+    title="EVE"
 )
 
 app.include_router(
@@ -40,3 +42,11 @@ async def home(request: Request):
         request=request,
         name="index.html"
     )
+
+
+app.include_router(
+    document_router,
+    prefix="/api",
+    tags=["Documents"]
+)
+

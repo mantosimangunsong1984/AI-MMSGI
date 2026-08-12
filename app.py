@@ -14,5 +14,5 @@ while True:
 
     answer = ai.chat(question)
 
-    print("\nMAIA :")
+    print("\nEVE :")
     print(answer)

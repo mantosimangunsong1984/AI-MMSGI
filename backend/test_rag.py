@@ -6,7 +6,7 @@ def main():
     rag = RAGService()
 
     print("=" * 60)
-    print("MAIA RAG TEST")
+    print("EVE RAG TEST")
     print("=" * 60)
 
     while True:

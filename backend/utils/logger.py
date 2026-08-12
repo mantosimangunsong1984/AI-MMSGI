@@ -8,9 +8,9 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 LOG_DIR = PROJECT_ROOT / "logs"
 LOG_DIR.mkdir(exist_ok=True)
 
-LOG_FILE = LOG_DIR / f"maia_{datetime.now().strftime('%Y%m%d')}.log"
+LOG_FILE = LOG_DIR / f"eve_{datetime.now().strftime('%Y%m%d')}.log"
 
-logger = logging.getLogger("MAIA")
+logger = logging.getLogger("EVE")
 
 logger.setLevel(logging.INFO)
 

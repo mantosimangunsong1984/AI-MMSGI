@@ -1,0 +1,59 @@
+body{
+
+    margin:0;
+
+    font-family:Arial;
+
+    background:#F3F4F6;
+
+}
+
+.container{
+
+    width:900px;
+
+    margin:50px auto;
+
+}
+
+.upload-card{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:12px;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+
+}
+
+button{
+
+    margin-top:15px;
+
+    padding:12px 24px;
+
+    border:none;
+
+    background:#B8860B;
+
+    color:white;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+}
+
+button:hover{
+
+    background:#A17608;
+
+}
+
+#result{
+
+    margin-top:25px;
+
+}

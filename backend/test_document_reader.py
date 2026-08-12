@@ -6,7 +6,7 @@ documents = reader.load_documents("storage/documents")
 
 print("=" * 70)
 
-print("MAIA DOCUMENT READER")
+print("EVE DOCUMENT READER")
 
 print("=" * 70)
 
