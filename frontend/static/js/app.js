@@ -223,6 +223,21 @@ async function sendMessage() {
         );
 
 
+        // ==================================================
+        // Update Chat History Title
+        // ==================================================
+
+        if (
+            data.title &&
+            typeof updateConversationTitle === "function"
+        ) {
+
+            updateConversationTitle(
+                data.conversation_id,
+                data.title
+            );
+
+        }
 
     }
 

@@ -27,6 +27,7 @@ class RenameRequest(BaseModel):
 class ChatResponse(BaseModel):
     conversation_id: int
     answer: str
+    title: str
 
 
 # ======================================================
@@ -82,6 +83,49 @@ async def chat(
         )
 
 
+    # # ==================================================
+    # # Simpan Pertanyaan User
+    # # ==================================================
+
+    # chat_history.save_message(
+    #     conversation_id=conversation_id,
+    #     role="user",
+    #     content=request.message
+    # )
+
+
+    # ==================================================
+    # Set Conversation Title dari Pertanyaan Pertama
+    # ==================================================
+
+    current_title = conversation[1]
+    title = current_title
+
+    if current_title == "New Chat":
+
+        title = " ".join(
+            request.message.strip().split()
+        )
+
+        # Batasi panjang title agar sidebar tetap rapi
+        max_title_length = 60
+
+        if len(title) > max_title_length:
+
+            title = (
+                title[:max_title_length]
+                .rstrip()
+                + "..."
+            )
+
+        if title:
+
+            chat_history.update_title(
+                conversation_id,
+                title
+            )
+
+
     # ==================================================
     # Simpan Pertanyaan User
     # ==================================================
@@ -123,7 +167,8 @@ async def chat(
 
     return ChatResponse(
         conversation_id=conversation_id,
-        answer=answer
+        answer=answer,
+        title=title
     )
 
 

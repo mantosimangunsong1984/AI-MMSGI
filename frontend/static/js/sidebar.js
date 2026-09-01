@@ -168,6 +168,86 @@ async function loadConversations() {
 
 }
 
+
+/* ======================================================
+   UPDATE ACTIVE CHAT TITLE
+   ====================================================== */
+
+function updateConversationTitle(
+    conversationId,
+    title
+) {
+
+    // Update data lokal
+    conversations =
+        conversations.map(chat => {
+
+            if (chat.id === conversationId) {
+
+                return {
+                    ...chat,
+                    title: title
+                };
+
+            }
+
+            return chat;
+
+        });
+
+
+    // Cari row conversation yang sesuai
+    const row =
+        historyContainer.querySelector(
+            `.history-row[data-conversation-id="${conversationId}"]`
+        );
+
+
+    // Jika row ditemukan,
+    // update title langsung tanpa render ulang
+    if (row) {
+
+        const titleElement =
+            row.querySelector(
+                ".history-text"
+            );
+
+
+        if (titleElement) {
+
+            titleElement.textContent =
+                "💬 " + title;
+
+        }
+
+        return;
+
+    }
+
+
+    // Jika row belum ditemukan,
+    // render ulang history sebagai fallback
+    const keyword =
+        searchInput
+            ? searchInput.value
+                .toLowerCase()
+                .trim()
+            : "";
+
+
+    const filtered =
+        conversations.filter(chat =>
+            chat.title
+                .toLowerCase()
+                .includes(keyword)
+        );
+
+
+    renderConversation(filtered);
+
+}
+
+
 /* ======================================================
    RENDER HISTORY
 ====================================================== */
@@ -182,6 +262,9 @@ function renderConversation(list) {
             document.createElement("div");
 
         row.className = "history-row";
+
+        row.dataset.conversationId =
+            chat.id;
 
         if (chat.id === activeConversationId) {
 
