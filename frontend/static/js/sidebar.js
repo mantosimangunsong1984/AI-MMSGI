@@ -68,47 +68,66 @@ function bindEvents() {
 
 }
 
+
 /* ======================================================
    NEW CHAT
 ====================================================== */
 
-async function createNewChat() {
+async function createNewChat(
+    showInitialScreen = true
+) {
 
     try {
 
-        const response = await fetch(
-            "/api/new-chat",
-            {
-                method: "POST"
-            }
-        );
+        const response =
+            await fetch(
+                "/api/new-chat",
+                {
+                    method: "POST"
+                }
+            );
+
 
         if (!response.ok) {
 
-            throw new Error("Create chat gagal");
+            throw new Error(
+                "Create chat gagal"
+            );
 
         }
 
-        const data = await response.json();
+
+        const data =
+            await response.json();
+
+
+        // ==============================================
+        // Set Active Conversation
+        // ==============================================
 
         activeConversationId =
             data.conversation_id;
 
-            window.currentConversationId =
-                data.conversation_id;
+
+        window.currentConversationId =
+            data.conversation_id;
 
 
-            localStorage.setItem(
-                "eve_current_conversation",
-                data.conversation_id
-            );
+        localStorage.setItem(
+            "eve_current_conversation",
+            data.conversation_id
+        );
 
 
-        // window.currentConversationId =
-        //     data.conversation_id;
+        // ==============================================
+        // Clear Chat
+        // ==============================================
 
         const chatBox =
-            document.getElementById("chat-box");
+            document.getElementById(
+                "chat-box"
+            );
+
 
         if (chatBox) {
 
@@ -116,10 +135,38 @@ async function createNewChat() {
 
         }
 
-        loadConversations();
+
+        // ==============================================
+        // Initial Screen
+        // ==============================================
+
+        if (
+            showInitialScreen &&
+            typeof window.setInitialState ===
+            "function"
+        ) {
+
+            window.setInitialState(true);
+
+        }
+
+
+        // ==============================================
+        // Refresh History
+        // ==============================================
+
+        await loadConversations();
+
+
+        // ==============================================
+        // Focus Input
+        // ==============================================
 
         const input =
-            document.getElementById("question");
+            document.getElementById(
+                "question"
+            );
+
 
         if (input) {
 
@@ -127,17 +174,37 @@ async function createNewChat() {
 
         }
 
+
+        console.log(
+            "New Conversation:",
+            window.currentConversationId
+        );
+
+
+        return data.conversation_id;
+
     }
+
 
     catch (err) {
 
-        console.error(err);
+        console.error(
+            "Create New Chat Error:",
+            err
+        );
 
-        alert("Gagal membuat chat baru.");
+
+        alert(
+            "Gagal membuat chat baru."
+        );
+
+
+        return null;
 
     }
 
 }
+
 
 /* ======================================================
    LOAD HISTORY
@@ -490,19 +557,31 @@ async function deleteConversation(id) {
             activeConversationId === id
         ) {
 
-            activeConversationId =
-                null;
+        activeConversationId =
+            null;
 
-            const chatBox =
-                document.getElementById("chat-box");
+        window.currentConversationId =
+            null;
 
-            if (chatBox) {
+        localStorage.removeItem(
+            "eve_current_conversation"
+        );
 
-                chatBox.innerHTML = "";
 
-            }
+        const chatBox =
+            document.getElementById("chat-box");
+
+        if (chatBox) {
+
+            chatBox.innerHTML = "";
 
         }
+
+
+        // Kembali ke Initial Screen
+        window.setInitialState(true);
+
+    }
 
         loadConversations();
 
@@ -550,6 +629,11 @@ async function openConversation(id) {
         }
 
         chatBox.innerHTML = "";
+
+
+        // Masuk ke Chat Screen
+        window.setInitialState(false);
+
 
         data.messages.forEach(msg => {
 

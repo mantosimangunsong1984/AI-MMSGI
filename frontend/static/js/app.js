@@ -1,24 +1,91 @@
-window.currentConversationId =
-    localStorage.getItem(
-        "eve_current_conversation"
-    );
+window.currentConversationId = null;
+
+const sendButton =
+    document.getElementById("send-btn");
+
+const input =
+    document.getElementById("question");
+
+// ======================================================
+// Auto Resize Question Input
+// ======================================================
+
+function autoResizeInput() {
+
+    input.style.height = "24px";
 
 
-const sendButton = document.getElementById("send-btn");
-const input = document.getElementById("question");
-const chatBox = document.getElementById("chat-box");
+    const newHeight =
+        Math.min(
+            input.scrollHeight,
+            150
+        );
 
 
-sendButton.addEventListener("click", sendMessage);
+    input.style.height =
+        newHeight + "px";
+
+}
+
+input.addEventListener(
+    "input",
+    autoResizeInput
+);
+
+const chatBox =
+    document.getElementById("chat-box");
 
 
-input.addEventListener("keydown", function (event) {
+// ======================================================
+// Initial Screen State
+// ======================================================
 
-    if (event.key === "Enter") {
-        sendMessage();
+window.setInitialState = function (isInitial) {
+
+    const mainContent =
+        document.querySelector(".main-content");
+
+    if (!mainContent) {
+        return;
     }
 
-});
+    if (isInitial) {
+
+        mainContent.classList.add("initial-state");
+
+    } else {
+
+        mainContent.classList.remove("initial-state");
+
+    }
+
+};
+
+
+// ======================================================
+// EVENTS
+// ======================================================
+
+sendButton.addEventListener(
+    "click",
+    sendMessage
+);
+
+
+input.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (event.key === "Enter" && !event.shiftKey) {
+
+            event.preventDefault();
+
+            sendMessage();
+
+        }
+
+    }
+);
 
 
 // ======================================================
@@ -27,16 +94,21 @@ input.addEventListener("keydown", function (event) {
 
 function addUserMessage(message) {
 
-    const wrapper = document.createElement("div");
+    const wrapper =
+        document.createElement("div");
 
-    wrapper.className = "user-message";
+    wrapper.className =
+        "user-message";
 
 
-    const bubble = document.createElement("div");
+    const bubble =
+        document.createElement("div");
 
-    bubble.className = "bubble-user";
+    bubble.className =
+        "bubble-user";
 
-    bubble.textContent = message;
+    bubble.textContent =
+        message;
 
 
     wrapper.appendChild(bubble);
@@ -44,25 +116,29 @@ function addUserMessage(message) {
     chatBox.appendChild(wrapper);
 
 
-    chatBox.scrollTop = chatBox.scrollHeight;
+    chatBox.scrollTop =
+        chatBox.scrollHeight;
 
 }
-
 
 
 function addAIMessage(message) {
 
+    const wrapper =
+        document.createElement("div");
 
-    const wrapper = document.createElement("div");
+    wrapper.className =
+        "ai-message";
 
-    wrapper.className = "ai-message";
 
+    const bubble =
+        document.createElement("div");
 
-    const bubble = document.createElement("div");
+    bubble.className =
+        "bubble-ai";
 
-    bubble.className = "bubble-ai";
-
-    bubble.textContent = message;
+    bubble.textContent =
+        message;
 
 
     wrapper.appendChild(bubble);
@@ -70,51 +146,60 @@ function addAIMessage(message) {
     chatBox.appendChild(wrapper);
 
 
-    chatBox.scrollTop = chatBox.scrollHeight;
+    chatBox.scrollTop =
+        chatBox.scrollHeight;
 
 }
 
 
-
 // ======================================================
-// Create New Chat
+// Create New Chat From Input
 // ======================================================
 
-async function createChatFromInput() {
+// async function createChatFromInput() {
+
+//     const response =
+//         await fetch(
+//             "/api/new-chat",
+//             {
+//                 method: "POST"
+//             }
+//         );
 
 
-    const response = await fetch(
-        "/api/new-chat",
-        {
-            method: "POST"
-        }
-    );
+//     if (!response.ok) {
+
+//         throw new Error(
+//             "Gagal membuat conversation baru"
+//         );
+
+//     }
 
 
-    const data = await response.json();
+//     const data =
+//         await response.json();
 
 
-    // window.currentConversationId = data.conversation_id;
-    window.currentConversationId =
-    data.conversation_id;
+//     window.currentConversationId =
+//         data.conversation_id;
 
 
-    localStorage.setItem(
-        "eve_current_conversation",
-        data.conversation_id
-    );
+//     localStorage.setItem(
+//         "eve_current_conversation",
+//         data.conversation_id
+//     );
 
 
-    chatBox.innerHTML = "";
+//     chatBox.innerHTML =
+//         "";
 
 
-    console.log(
-        "New Conversation:",
-        window.currentConversationId
-    );
+//     console.log(
+//         "New Conversation:",
+//         window.currentConversationId
+//     );
 
-}
-
+// }
 
 
 // ======================================================
@@ -123,113 +208,167 @@ async function createChatFromInput() {
 
 async function sendMessage() {
 
-
-    const message = input.value.trim();
+    const message =
+        input.value.trim();
 
 
     if (message === "") {
+
         return;
+
     }
 
 
-    // Jika belum ada chat
-    // otomatis buat conversation baru
 
-    if (window.currentConversationId === null) {
+    // ==========================================
+// Jika belum ada conversation
+// ==========================================
 
-        // await createNewChat();
-        await createChatFromInput();
+if (
+    window.currentConversationId === null ||
+    window.currentConversationId === undefined ||
+    window.currentConversationId === ""
+) {
 
-            console.log(
-        "AFTER CREATE CHAT ID:",
-        window.currentConversationId
+    const newConversationId =
+        await createNewChat(false);
+
+
+    if (!newConversationId) {
+
+        console.error(
+            "Conversation gagal dibuat."
         );
 
+        return;
+
     }
 
+}
 
+
+
+    // ==========================================
+    // Keluar dari Initial Screen
+    // ==========================================
+
+    window.setInitialState(false);
+
+
+    // ==========================================
+    // User Message
+    // ==========================================
 
     addUserMessage(message);
 
 
     input.value = "";
 
+    input.style.height = "24px";
 
+
+    // ==========================================
+    // Loading
+    // ==========================================
 
     const loadingId =
         "loading-" + Date.now();
 
 
-
     chatBox.innerHTML += `
 
-    <div id="${loadingId}" class="ai-message">
+        <div
+            id="${loadingId}"
+            class="ai-message">
 
-        <div class="bubble-loading">
+            <div class="bubble-loading">
 
-            ⏳ EVE sedang berpikir...
+                ⏳ EVE sedang berpikir...
+
+            </div>
 
         </div>
-
-    </div>
 
     `;
 
 
+    chatBox.scrollTop =
+        chatBox.scrollHeight;
+
+
+    // ==========================================
+    // Call Chat API
+    // ==========================================
 
     try {
 
+        const response =
+            await fetch(
 
-        const response = await fetch(
+                `/api/chat/${window.currentConversationId}`,
 
-            `/api/chat/${window.currentConversationId}`,
+                {
 
-            {
+                    method: "POST",
 
-                method: "POST",
+                    headers: {
 
-                headers: {
+                        "Content-Type":
+                            "application/json"
 
-                    "Content-Type":
-                    "application/json"
+                    },
 
-                },
+                    body: JSON.stringify({
 
+                        message:
+                            message
 
-                body: JSON.stringify({
+                    })
 
-                    message: message
+                }
 
-                })
-
-            }
-
-        );
-
-
-
-        const data = await response.json();
+            );
 
 
+        if (!response.ok) {
+
+            throw new Error(
+                `Chat API error: ${response.status}`
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        // ======================================
+        // Remove Loading
+        // ======================================
 
         document
-        .getElementById(loadingId)
-        .remove();
+            .getElementById(loadingId)
+            ?.remove();
 
 
+        // ======================================
+        // AI Response
+        // ======================================
 
         addAIMessage(
             data.answer
         );
 
 
-        // ==================================================
+        // ======================================
         // Update Chat History Title
-        // ==================================================
+        // ======================================
 
         if (
             data.title &&
-            typeof updateConversationTitle === "function"
+            typeof updateConversationTitle ===
+                "function"
         ) {
 
             updateConversationTitle(
@@ -242,13 +381,11 @@ async function sendMessage() {
     }
 
 
-    catch(error) {
-
+    catch (error) {
 
         document
-        .getElementById(loadingId)
-        ?.remove();
-
+            .getElementById(loadingId)
+            ?.remove();
 
 
         addAIMessage(
@@ -256,12 +393,14 @@ async function sendMessage() {
         );
 
 
-        console.error(error);
+        console.error(
+            "Send message error:",
+            error
+        );
 
     }
 
 }
-
 
 
 // ======================================================
@@ -271,7 +410,9 @@ async function sendMessage() {
 function hideWelcome() {
 
     const welcome =
-    document.querySelector(".welcome");
+        document.querySelector(
+            ".welcome"
+        );
 
 
     if (welcome) {
