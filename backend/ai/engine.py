@@ -1,5 +1,6 @@
 from llama_cpp import Llama
 from backend.utils.logger import logger
+from backend.ai.model_manager import ModelManager
 import time
 from backend.ai.config import (
     N_CTX,
@@ -14,16 +15,39 @@ from backend.ai.model_manager import ModelManager
 
 
 class AIEngine:
+
+    def get_available_models(self):
+
+        return ModelManager.get_available_models()
+
     def __init__(self):
 
         print("=" * 60)
         print("EVE AI ENGINE")
         print("=" * 60)
 
-        model_path = ModelManager.get_model_path()
+        self.current_model = None
+        self.llm = None
+
+        self.change_model(
+            "Qwen2.5-3B-Instruct-Q4_K_M.gguf"
+        )
+
+    def change_model(self, model_name):
+
+        print("=" * 60)
+        print("CHANGE EVE MODEL")
+        print("=" * 60)
+
+        model_path = ModelManager.get_model_path(
+            model_name
+        )
 
         print("Loading model:")
         print(model_path)
+
+        # Hapus model lama dari memory
+        self.llm = None
 
         self.llm = Llama(
             model_path=str(model_path),
@@ -32,9 +56,38 @@ class AIEngine:
             verbose=VERBOSE
         )
 
-        print("\nModel berhasil di-load.\n")
+        self.current_model = model_name
 
-        logger.info("Model berhasil dimuat.")
+        print(
+            f"Model aktif: {model_name}"
+        )
+
+        logger.info(
+            f"Model aktif: {model_name}"
+        )
+
+# class AIEngine:
+#     def __init__(self):
+
+#         print("=" * 60)
+#         print("EVE AI ENGINE")
+#         print("=" * 60)
+
+#         model_path = ModelManager.get_model_path()
+
+#         print("Loading model:")
+#         print(model_path)
+
+#         self.llm = Llama(
+#             model_path=str(model_path),
+#             n_ctx=N_CTX,
+#             n_threads=N_THREADS,
+#             verbose=VERBOSE
+#         )
+
+#         print("\nModel berhasil di-load.\n")
+
+#         logger.info("Model berhasil dimuat.")
 
 
     def chat(self, message: str) -> str:

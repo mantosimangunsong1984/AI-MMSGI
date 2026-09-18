@@ -280,3 +280,57 @@ async def rename_conversation(
         "message": "Conversation berhasil diubah.",
         "title": title
     }
+
+
+# ======================================================
+# Get Available AI Models
+# ======================================================
+
+@router.get("/models")
+async def get_models():
+
+    models = rag.ai.get_available_models()
+
+    return {
+        "models": models,
+        "active_model": rag.ai.current_model
+    }
+
+
+# ======================================================
+# Change AI Model
+# ======================================================
+
+class ModelRequest(BaseModel):
+    model_name: str
+
+
+@router.post("/models/select")
+async def select_model(
+    request: ModelRequest
+):
+
+    try:
+
+        rag.ai.change_model(
+            request.model_name
+        )
+
+        return {
+            "success": True,
+            "active_model": rag.ai.current_model
+        }
+
+    except FileNotFoundError as e:
+
+        raise HTTPException(
+            status_code=404,
+            detail=str(e)
+        )
+
+    except Exception as e:
+
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )

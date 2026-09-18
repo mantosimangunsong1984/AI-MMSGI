@@ -183,18 +183,49 @@
 
 
 
-            <div class="version">
+            <div class="model-selector">
 
-
-                v1.0
-
+                <select id="model-select">
+                    <option value="">Loading model...</option>
+                </select>
 
             </div>
 
 
+            <div class="version">
+
+                v1.0
+
+            </div>
+
 
         </header>
 
+            <div class="active-model-bar">
+
+                <!-- <span>🤖</span> -->
+                 <span class="model-icon">
+                    <svg width="15" height="15" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                        <rect x="8" y="8" width="8" height="8" rx="1"></rect>
+                        <line x1="9" y1="1" x2="9" y2="4"></line>
+                        <line x1="15" y1="1" x2="15" y2="4"></line>
+                        <line x1="9" y1="20" x2="9" y2="23"></line>
+                        <line x1="15" y1="20" x2="15" y2="23"></line>
+                    </svg>
+                </span>
+
+                <span>Model:</span>
+
+                <strong id="active-model-name">
+                    Loading...
+                </strong>
+
+            </div>
 
 
 
