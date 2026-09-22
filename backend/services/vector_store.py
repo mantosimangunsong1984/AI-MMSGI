@@ -3133,16 +3133,6 @@ class VectorStore:
 
 
 
-    
-
-
-
-
-
-
-
-
-
         # =================================================
         # DEDUPLICATE
         # =================================================
@@ -4251,6 +4241,181 @@ class VectorStore:
         print("=" * 80)
 
         return results
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # =====================================================
+    # CREATE VECTOR STORE WITHOUT DOCUMENT
+    # =====================================================
+
+    def create_without_document(
+        self,
+        filename
+    ):
+
+        target_filename = (
+            str(filename)
+            .strip()
+            .lower()
+        )
+
+        # -------------------------------------------------
+        # Create vector store baru
+        # -------------------------------------------------
+
+        new_store = VectorStore(
+            dimension=self.dimension
+        )
+
+        removed_count = 0
+
+        vectors = []
+
+        # -------------------------------------------------
+        # FILTER METADATA + VECTOR
+        # -------------------------------------------------
+
+        for index_position, metadata in enumerate(
+            self.metadata
+        ):
+
+            current_filename = (
+                str(
+                    metadata.get(
+                        "filename",
+                        ""
+                    )
+                )
+                .strip()
+                .lower()
+            )
+
+            # -------------------------------------------------
+            # Dokumen yang akan dihapus
+            # -------------------------------------------------
+
+            if (
+                current_filename
+                == target_filename
+            ):
+
+                removed_count += 1
+
+                continue
+
+            # -------------------------------------------------
+            # Ambil vector asli
+            # -------------------------------------------------
+
+            vector = self.index.reconstruct(
+                index_position
+            )
+
+            vectors.append(
+                vector
+            )
+
+            # -------------------------------------------------
+            # Copy metadata
+            # -------------------------------------------------
+
+            new_store.metadata.append(
+                metadata.copy()
+            )
+
+        # -------------------------------------------------
+        # Tambahkan vector yang tersisa
+        # -------------------------------------------------
+
+        if vectors:
+
+            vectors = np.asarray(
+                vectors,
+                dtype=np.float32
+            )
+
+            new_store.index.add(
+                vectors
+            )
+
+        # -------------------------------------------------
+        # VALIDATE
+        # -------------------------------------------------
+
+        if (
+            new_store.index.ntotal
+            != len(
+                new_store.metadata
+            )
+        ):
+
+            raise RuntimeError(
+                "Vector dan metadata tidak sinkron "
+                "setelah penghapusan dokumen."
+            )
+
+        # -------------------------------------------------
+        # DEBUG
+        # -------------------------------------------------
+
+        print()
+
+        print("=" * 60)
+        print("CREATE VECTOR STORE WITHOUT DOCUMENT")
+        print("=" * 60)
+
+        print(
+            "Target Document  :",
+            filename
+        )
+
+        print(
+            "Removed Vectors  :",
+            removed_count
+        )
+
+        print(
+            "Remaining Vectors:",
+            new_store.index.ntotal
+        )
+
+        print(
+            "Remaining Metadata:",
+            len(
+                new_store.metadata
+            )
+        )
+
+        print("=" * 60)
+
+        return (
+            new_store,
+            removed_count
+        )
+
+
+
+
+
+
+
+
+
+
+    
 
     # =====================================================
     # SAVE

@@ -3,7 +3,6 @@ from backend.services.chunker import DocumentChunker
 from backend.services.embedding import EmbeddingService
 from backend.services.vector_store import VectorStore
 from backend.ai.engine import AIEngine
-
 from pathlib import Path
 import shutil
 import numpy as np
@@ -243,6 +242,8 @@ class RAGService:
             extension
         )
 
+
+
         # =================================================
         # VALIDATE EXTENSION
         # =================================================
@@ -433,6 +434,146 @@ class RAGService:
                 "SUCCESS"
 
         }
+
+
+
+    # ======================================================
+    # GET DOCUMENT LIST
+    # ======================================================
+
+    def get_documents(self):
+
+        document_folder = Path("storage/documents")
+
+        if not document_folder.exists():
+            return []
+
+        supported_extensions = [
+            ".pdf",
+            ".docx",
+            ".txt"
+        ]
+
+        documents = []
+
+        for file_path in sorted(
+            document_folder.iterdir()
+        ):
+
+            if not file_path.is_file():
+                continue
+
+            if file_path.suffix.lower() not in supported_extensions:
+                continue
+
+            documents.append({
+                "filename": file_path.name,
+                "document_name": file_path.stem,
+                "extension": file_path.suffix.lower(),
+                "size": file_path.stat().st_size
+            })
+
+        return documents
+
+
+    # ======================================================
+    # DELETE DOCUMENT
+    # ======================================================
+
+    def delete_document(self, filename):
+
+        document_folder = Path(
+            "storage/documents"
+        )
+
+        requested_name = Path(filename).name
+
+        # Prevent path traversal
+        if requested_name != filename:
+            raise ValueError(
+                "Nama file tidak valid."
+            )
+
+        file_path = (
+            document_folder /
+            requested_name
+        )
+
+        # Check physical file
+        if not file_path.exists():
+
+            raise FileNotFoundError(
+                f"Dokumen tidak ditemukan: "
+                f"{requested_name}"
+            )
+
+        if not file_path.is_file():
+
+            raise ValueError(
+                "Path yang diberikan bukan file."
+            )
+
+        # Remove document vectors from vector store
+        new_store, removed_count = (
+            self.store.create_without_document(
+                requested_name
+            )
+        )
+
+        if removed_count == 0:
+
+            raise ValueError(
+                "Dokumen ditemukan di storage, "
+                "tetapi tidak ditemukan di vector store."
+            )
+
+        # Keep old store as backup
+        old_store = self.store
+
+        # Replace with filtered store
+        self.store = new_store
+
+        try:
+
+            # Save new FAISS index
+            # and metadata
+            self.store.save()
+
+        except Exception:
+
+            # Restore old store
+            self.store = old_store
+
+            raise
+
+        try:
+
+            # Delete physical document
+            file_path.unlink()
+
+        except Exception as e:
+
+            # Restore old vector store
+            self.store = old_store
+
+            try:
+                self.store.save()
+            except Exception:
+                pass
+
+            raise Exception(
+                f"Gagal menghapus file fisik: {e}"
+            )
+
+        return {
+            "filename": requested_name,
+            "removed_vectors": removed_count,
+            "remaining_documents": self.get_documents(),
+            "status": "SUCCESS"
+        }
+
+
+
 
     # =====================================================
     # SEARCH
@@ -720,4 +861,148 @@ class RAGService:
             "sources":
                 results
 
+        }
+
+
+    def get_documents(self):
+
+        document_folder = Path(
+            "storage/documents"
+        )
+
+        if not document_folder.exists():
+
+            return []
+
+        supported_extensions = [
+            ".pdf",
+            ".docx",
+            ".txt"
+        ]
+
+        documents = []
+
+        for file_path in sorted(
+            document_folder.iterdir()
+        ):
+
+            if not file_path.is_file():
+                continue
+
+            if file_path.suffix.lower() not in supported_extensions:
+                continue
+
+            documents.append({
+                "filename": file_path.name,
+                "document_name": file_path.stem,
+                "extension": file_path.suffix.lower(),
+                "size": file_path.stat().st_size
+            })
+
+        return documents
+
+
+    def delete_document(self, filename):
+
+        document_folder = Path(
+            "storage/documents"
+        )
+
+        # =====================================================
+        # SECURITY CHECK
+        # =====================================================
+
+        requested_name = Path(
+            filename
+        ).name
+
+        if requested_name != filename:
+
+            raise ValueError(
+                "Nama file tidak valid."
+            )
+
+        file_path = document_folder / requested_name
+
+        if not file_path.exists():
+
+            raise FileNotFoundError(
+                f"Dokumen tidak ditemukan: {requested_name}"
+            )
+
+        if not file_path.is_file():
+
+            raise ValueError(
+                "Path yang diberikan bukan file."
+            )
+
+        # =====================================================
+        # BUAT VECTOR STORE BARU
+        # TANPA DOKUMEN TERSEBUT
+        # =====================================================
+
+        new_store, removed_count = (
+            self.store.create_without_document(
+                requested_name
+            )
+        )
+
+        # Pastikan dokumen memang ada di FAISS
+        if removed_count == 0:
+
+            raise ValueError(
+                "Dokumen ditemukan di storage, "
+                "tetapi tidak ditemukan di vector store."
+            )
+
+        # =====================================================
+        # SIMPAN VECTOR STORE BARU
+        # =====================================================
+
+        old_store = self.store
+
+        self.store = new_store
+
+        try:
+
+            self.store.save()
+
+        except Exception:
+
+            # Kembalikan store lama
+            self.store = old_store
+
+            raise
+
+        # =====================================================
+        # HAPUS FILE FISIK
+        # =====================================================
+
+        try:
+
+            file_path.unlink()
+
+        except Exception as e:
+
+            # Rollback vector store
+            self.store = old_store
+
+            try:
+                self.store.save()
+            except Exception:
+                pass
+
+            raise Exception(
+                f"Gagal menghapus file fisik: {e}"
+            )
+
+        # =====================================================
+        # HASIL
+        # =====================================================
+
+        return {
+            "filename": requested_name,
+            "removed_vectors": removed_count,
+            "remaining_documents": self.get_documents(),
+            "status": "SUCCESS"
         }

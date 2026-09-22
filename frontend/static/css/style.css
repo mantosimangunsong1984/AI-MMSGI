@@ -737,7 +737,6 @@ INPUT
 
 
 /* Copy button */
-
 .copy-button {
 
     position: absolute;
@@ -769,23 +768,544 @@ INPUT
 
     opacity: 0.75;
 
+    z-index: 10;
+
+    pointer-events: auto;
+
+    transition:
+        background 0.2s ease,
+        opacity 0.2s ease,
+        transform 0.1s ease;
+}
+
+/* ======================================================
+   SETTINGS MODAL
+====================================================== */
+
+.settings-modal {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.35);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 1000;
+
+    padding: 20px;
+
+}
+
+
+/* Hidden */
+
+.settings-modal.hidden {
+
+    display: none;
+
+}
+
+
+/* ======================================================
+   SETTINGS PANEL
+====================================================== */
+
+.settings-panel {
+
+    width: min(650px, 95vw);
+
+    max-height: 85vh;
+
+    background: white;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 15px 50px rgba(0, 0, 0, 0.20);
+
+    display: flex;
+
+    flex-direction: column;
+
+    overflow: hidden;
+
+}
+
+
+/* ======================================================
+   SETTINGS HEADER
+====================================================== */
+
+.settings-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 20px 24px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+}
+
+
+.settings-header h2 {
+
+    font-size: 21px;
+
+    color: #1f2937;
+
+    margin-bottom: 3px;
+
+}
+
+
+.settings-header small {
+
+    color: #777;
+
+    font-size: 12px;
+
+}
+
+
+/* Close */
+
+.settings-close {
+
+    width: 34px;
+
+    height: 34px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #666;
+
+    font-size: 25px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+}
+
+
+.settings-close:hover {
+
+    background: #f1f5f9;
+
+    color: #222;
+
+}
+
+
+/* ======================================================
+   SETTINGS CONTENT
+====================================================== */
+
+.settings-content {
+
+    padding: 24px;
+
+    overflow-y: auto;
+
+}
+
+
+/* ======================================================
+   SETTINGS SECTION
+====================================================== */
+
+.settings-section {
+
+    margin-bottom: 30px;
+
+}
+
+
+.settings-section:last-child {
+
+    margin-bottom: 0;
+
+}
+
+
+.settings-section h3 {
+
+    font-size: 15px;
+
+    color: #1f2937;
+
+    margin-bottom: 5px;
+
+}
+
+
+.settings-description {
+    margin: 0;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    color: #4b5563;
+}
+
+/* ======================================================
+   SETTINGS MODEL SELECT
+====================================================== */
+
+.settings-model-select {
+
+    width: 100%;
+
+    padding: 10px 12px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 8px;
+
+    background: white;
+
+    color: #333;
+
+    font-size: 13px;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    outline: none;
+
+}
+
+
+.settings-model-select:focus {
+
+    border-color: #0F62FE;
+
+    box-shadow:
+        0 0 0 2px rgba(15, 98, 254, 0.08);
+
+}
+
+
+.settings-model-select:disabled {
+
+    background: #f5f5f5;
+
+    cursor: wait;
+
+}
+
+
+/* ======================================================
+   DOCUMENT LIST
+====================================================== */
+
+.settings-document-list {
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    background: #fff;
+
+}
+
+
+/* ======================================================
+   DOCUMENT ITEM
+====================================================== */
+
+.settings-document-item {
+
+    min-height: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 10px 12px;
+
+    border-bottom: 1px solid #edf0f3;
+
+}
+
+
+.settings-document-item:last-child {
+
+    border-bottom: none;
+
+}
+
+
+/* Hover */
+
+.settings-document-item:hover {
+
+    background: #f8fafc;
+
+}
+
+
+/* ======================================================
+   DOCUMENT INFO
+====================================================== */
+
+.document-info {
+
+    min-width: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.document-icon {
+
+    flex-shrink: 0;
+
+    font-size: 18px;
+
+}
+
+
+.document-name {
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    color: #333;
+
+    font-size: 13px;
+
+}
+
+
+/* ======================================================
+   DELETE BUTTON
+====================================================== */
+
+.document-delete-button {
+
+    flex-shrink: 0;
+
+    width: 32px;
+
+    height: 32px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: transparent;
+
+    color: #777;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.1s ease;
+
+}
+
+
+.document-delete-button:hover {
+
+    background: #fee2e2;
+
+    color: #dc2626;
+
+}
+
+
+.document-delete-button:active {
+
+    transform: scale(0.94);
+
+}
+
+
+.document-delete-button:disabled {
+
+    cursor: wait;
+
+}
+
+
+/* ======================================================
+   DOCUMENT STATUS
+====================================================== */
+
+.document-loading,
+.document-empty,
+.document-error {
+
+    padding: 25px 15px;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    color: #777;
+
+}
+
+
+.document-error {
+
+    color: #dc2626;
+
+}
+
+
+/* ======================================================
+   SETTINGS FOOTER
+====================================================== */
+
+.settings-footer {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    padding: 14px 24px;
+
+    border-top: 1px solid #e5e7eb;
+
+    background: #fafafa;
+
+}
+
+
+.settings-button {
+
+    min-width: 80px;
+
+    padding: 9px 16px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 8px;
+
+    background: white;
+
+    color: #444;
+
+    font-size: 13px;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+}
+
+
+.settings-button:hover {
+
+    background: #f3f4f6;
+
+}
+
+.settings-section-title {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.settings-section-title > div {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.settings-upload-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 9px 14px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #111827;
+    color: white;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
     transition:
         background 0.2s ease,
         opacity 0.2s ease;
 }
 
-
-.copy-button:hover {
-
-    background: white;
-
-    opacity: 1;
-
+.settings-upload-button:hover {
+    background: #1f2937;
 }
 
-
-.copy-button:active {
-
-    transform: scale(0.95);
-
+.settings-upload-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
+
+.settings-upload-status {
+    margin-top: 12px;
+    margin-bottom: 12px;
+
+    padding: 9px 12px;
+
+    border-radius: 7px;
+
+    background: #f3f4f6;
+
+    color: #374151;
+
+    font-size: 13px;
+}
+
+.settings-upload-status.hidden {
+    display: none;
+}
+

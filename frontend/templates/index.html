@@ -117,27 +117,24 @@
         <div class="sidebar-footer">
 
 
-            <div class="sidebar-menu">
+            <div class="sidebar-footer">
 
+        <div
+            id="settings-btn"
+            class="sidebar-menu">
 
-                ⚙ Settings
-
-
-            </div>
-
-
-
-            <div class="sidebar-menu">
-
-
-                👤 User
-
-
-            </div>
-
-
+            ⚙ Settings
 
         </div>
+
+
+        <div class="sidebar-menu">
+
+            👤 User
+
+        </div>
+
+    </div>
 
 
 
@@ -384,7 +381,178 @@
 
     </main>
 
+<!-- ========================================= -->
+<!-- SETTINGS MODAL -->
+<!-- ========================================= -->
 
+<div
+    id="settings-modal"
+    class="settings-modal hidden">
+
+    <div class="settings-panel">
+
+        <!-- HEADER -->
+
+        <div class="settings-header">
+
+            <div>
+
+                <h2>Settings</h2>
+
+                <small>
+                    EVE Configuration
+                </small>
+
+            </div>
+
+            <button
+                id="settings-close"
+                class="settings-close">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <!-- CONTENT -->
+
+        <div class="settings-content">
+
+
+            <!-- ================================= -->
+            <!-- AI MODEL -->
+            <!-- ================================= -->
+
+            <section class="settings-section">
+
+                <h3>AI Model</h3>
+
+                <p class="settings-description">
+                    Select the AI model used by EVE.
+                </p>
+
+
+                <select
+                    id="settings-model-select"
+                    class="settings-model-select">
+
+                    <option value="">
+                        Loading model...
+                    </option>
+
+                </select>
+
+            </section>
+
+
+
+            <!-- ================================= -->
+            <!-- DOCUMENTS -->
+            <!-- ================================= -->
+
+            <section class="settings-section">
+
+                <div class="settings-section-title">
+
+                    <div>
+
+                        <h3>Documents</h3>
+
+                        <p class="settings-description">
+                            Documents Available to EVE Knowledge Base:
+                        </p>
+
+                    </div>
+
+                    <button
+                        id="settings-upload-button"
+                        class="settings-upload-button">
+
+                        <svg
+                            width="15"
+                            height="15"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round">
+
+                            <path d="M12 16V4"></path>
+                            <polyline points="7 9 12 4 17 9"></polyline>
+                            <path d="M5 20h14"></path>
+
+                        </svg>
+
+                        Upload Document
+
+                    </button>
+
+                </div>
+
+                <input
+                    type="file"
+                    id="settings-file-input"
+                    accept=".pdf,.docx,.txt"
+                    style="display:none;">
+
+                <div
+                    id="settings-upload-status"
+                    class="settings-upload-status hidden">
+                </div>
+
+                <div
+                    id="settings-document-list"
+                    class="settings-document-list">
+
+                    <div class="document-loading">
+
+                        Loading documents...
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+                <div
+                    id="settings-document-list"
+                    class="settings-document-list">
+
+                    <div class="document-loading">
+
+                        Loading documents...
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <div class="settings-footer">
+
+            <button
+                id="settings-close-bottom"
+                class="settings-button">
+
+                Close
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
 
 
