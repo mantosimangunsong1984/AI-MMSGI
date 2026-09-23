@@ -1290,7 +1290,8 @@ INPUT
     cursor: not-allowed;
 }
 
-.settings-upload-status {
+
+    .settings-upload-status {
     margin-top: 12px;
     margin-bottom: 12px;
 
@@ -1298,11 +1299,12 @@ INPUT
 
     border-radius: 7px;
 
-    background: #f3f4f6;
+    background: #fef2f2;
+    color: #dc2626;
 
-    color: #374151;
-
-    font-size: 13px;
+    font-size: 15px;
+    font-weight: 600;
+}
 }
 
 .settings-upload-status.hidden {

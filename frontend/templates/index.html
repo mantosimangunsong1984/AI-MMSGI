@@ -448,92 +448,76 @@
 
 
 
-            <!-- ================================= -->
-            <!-- DOCUMENTS -->
-            <!-- ================================= -->
+    <!-- ================================= -->
+    <!-- DOCUMENTS -->
+    <!-- ================================= -->
 
-            <section class="settings-section">
+        <section class="settings-section">
 
-                <div class="settings-section-title">
+            <div class="settings-section-title">
 
-                    <div>
+                <div>
 
-                        <h3>Documents</h3>
-
-                        <p class="settings-description">
-                            Documents Available to EVE Knowledge Base:
-                        </p>
-
-                    </div>
-
-                    <button
-                        id="settings-upload-button"
-                        class="settings-upload-button">
-
-                        <svg
-                            width="15"
-                            height="15"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round">
-
-                            <path d="M12 16V4"></path>
-                            <polyline points="7 9 12 4 17 9"></polyline>
-                            <path d="M5 20h14"></path>
-
-                        </svg>
-
-                        Upload Document
-
-                    </button>
+                    <h3>Documents</h3>
 
                 </div>
 
-                <input
-                    type="file"
-                    id="settings-file-input"
-                    accept=".pdf,.docx,.txt"
-                    style="display:none;">
+                <button
+                    id="settings-upload-button"
+                    class="settings-upload-button">
 
-                <div
-                    id="settings-upload-status"
-                    class="settings-upload-status hidden">
+                    <svg
+                        width="15"
+                        height="15"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path d="M12 16V4"></path>
+                        <polyline points="7 9 12 4 17 9"></polyline>
+                        <path d="M5 20h14"></path>
+
+                    </svg>
+
+                    Upload Document
+
+                </button>
+
+            </div>
+
+            <input
+                type="file"
+                id="settings-file-input"
+                accept=".pdf,.docx,.txt"
+                style="display:none;">
+
+            <div
+                id="settings-upload-status"
+                class="settings-upload-status hidden">
+            </div>
+
+            <p class="settings-description">
+                Documents Available to EVE Knowledge Base:
+            </p>
+
+            <div
+                id="settings-document-list"
+                class="settings-document-list">
+
+                <div class="document-loading">
+
+                    Loading documents...
+
                 </div>
 
-                <div
-                    id="settings-document-list"
-                    class="settings-document-list">
+            </div>
 
-                    <div class="document-loading">
+        </section>
 
-                        Loading documents...
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-                <div
-                    id="settings-document-list"
-                    class="settings-document-list">
-
-                    <div class="document-loading">
-
-                        Loading documents...
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-        </div>
+    </div>
 
 
         <!-- FOOTER -->

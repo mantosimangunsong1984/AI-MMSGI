@@ -563,8 +563,23 @@ function formatModelName(model) {
         model ===
         "microsoft_Phi-4-mini-instruct-Q4_K_M.gguf"
     ) {
-        return "Phi-4 Mini 3.8B";
+        return "Phi-4 Mini Q4";
     }
+
+    if (
+        model ===
+        "Qwen_Qwen3-8B-Q4_K_M.gguf"
+    ) {
+        return "Qwen 3 8B";
+    }
+
+    if (
+        model ===
+        "microsoft_Phi-4-mini-instruct-Q8_0.gguf"
+    ) {
+        return "Phi-4 Mini Q8";
+    }
+
 
     return model
         .replace(".gguf", "")
@@ -1479,9 +1494,7 @@ if (settingsFileInput) {
 }
 
 
-async function uploadDocumentFromSettings(
-    file
-) {
+async function uploadDocumentFromSettings(file) {
 
     try {
 
@@ -1494,6 +1507,7 @@ async function uploadDocumentFromSettings(
         settingsUploadStatus.textContent =
             "Uploading and processing document...";
 
+
         const formData =
             new FormData();
 
@@ -1501,6 +1515,7 @@ async function uploadDocumentFromSettings(
             "file",
             file
         );
+
 
         const response =
             await fetch(
@@ -1511,10 +1526,20 @@ async function uploadDocumentFromSettings(
                 }
             );
 
+
         const result =
             await response.json();
 
+
         if (!response.ok) {
+
+            if (response.status === 409) {
+
+                throw new Error(
+                    "Document already exists."
+                );
+
+            }
 
             throw new Error(
                 result.detail ||
@@ -1523,21 +1548,28 @@ async function uploadDocumentFromSettings(
 
         }
 
+
         settingsUploadStatus.textContent =
             "Document uploaded successfully.";
 
+
         await loadDocuments();
+
 
         setTimeout(
             function () {
+
+                settingsUploadStatus.textContent =
+                    "";
 
                 settingsUploadStatus.classList.add(
                     "hidden"
                 );
 
             },
-            2000
+            3000
         );
+
 
     }
     catch (error) {
@@ -1547,9 +1579,30 @@ async function uploadDocumentFromSettings(
             error
         );
 
+
         settingsUploadStatus.textContent =
             "Upload failed: " +
             error.message;
+
+
+        settingsUploadStatus.classList.remove(
+            "hidden"
+        );
+
+
+        setTimeout(
+            function () {
+
+                settingsUploadStatus.textContent =
+                    "";
+
+                settingsUploadStatus.classList.add(
+                    "hidden"
+                );
+
+            },
+            3000
+        );
 
     }
     finally {
@@ -1560,4 +1613,3 @@ async function uploadDocumentFromSettings(
     }
 
 }
-
