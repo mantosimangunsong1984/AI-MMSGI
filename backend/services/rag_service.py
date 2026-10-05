@@ -575,6 +575,269 @@ class RAGService:
 
 
 
+
+    # =====================================================
+    # GET DOCUMENT CHUNKS
+    # =====================================================
+
+    def get_chunks(self, filename):
+
+        requested_name = Path(
+            filename
+        ).name
+
+        # Security check
+        if requested_name != filename:
+
+            raise ValueError(
+                "Nama file tidak valid."
+            )
+
+        # Pastikan file fisik ada
+        document_folder = Path(
+            "storage/documents"
+        )
+
+        file_path = (
+            document_folder /
+            requested_name
+        )
+
+        if not file_path.exists():
+
+            raise FileNotFoundError(
+                f"Dokumen tidak ditemukan: "
+                f"{requested_name}"
+            )
+
+        # Ambil chunk dari VectorStore
+        chunks = self.store.get_document_chunks(
+            requested_name
+        )
+
+        return {
+            "filename": requested_name,
+            "total_chunks": len(chunks),
+            "chunks": chunks
+        }
+
+
+
+
+
+        # =====================================================
+    # GET SINGLE CHUNK
+    # =====================================================
+
+    def get_chunk(
+        self,
+        filename,
+        chunk_id
+    ):
+
+        requested_name = Path(
+            filename
+        ).name
+
+        # Security check
+        if requested_name != filename:
+
+            raise ValueError(
+                "Nama file tidak valid."
+            )
+
+        document_folder = Path(
+            "storage/documents"
+        )
+
+        file_path = (
+            document_folder /
+            requested_name
+        )
+
+        if not file_path.exists():
+
+            raise FileNotFoundError(
+                f"Dokumen tidak ditemukan: "
+                f"{requested_name}"
+            )
+
+        chunk = self.store.get_chunk(
+            requested_name,
+            chunk_id
+        )
+
+        if chunk is None:
+
+            raise ValueError(
+                f"Chunk {chunk_id} "
+                f"tidak ditemukan pada "
+                f"dokumen '{requested_name}'."
+            )
+
+        return chunk
+
+
+
+
+        # =====================================================
+    # UPDATE CHUNK
+    # =====================================================
+
+    def update_chunk(
+        self,
+        filename,
+        chunk_id,
+        new_text
+    ):
+
+        requested_name = Path(
+            filename
+        ).name
+
+        # Security check
+        if requested_name != filename:
+
+            raise ValueError(
+                "Nama file tidak valid."
+            )
+
+        if not new_text or not str(
+            new_text
+        ).strip():
+
+            raise ValueError(
+                "Text chunk tidak boleh kosong."
+            )
+
+        document_folder = Path(
+            "storage/documents"
+        )
+
+        file_path = (
+            document_folder /
+            requested_name
+        )
+
+        if not file_path.exists():
+
+            raise FileNotFoundError(
+                f"Dokumen tidak ditemukan: "
+                f"{requested_name}"
+            )
+
+        # =================================================
+        # UPDATE CHUNK
+        # =================================================
+
+        result = self.store.update_chunk(
+            filename=requested_name,
+            chunk_id=chunk_id,
+            new_text=new_text,
+            embedding_service=self.embedder
+        )
+
+        if result is None:
+
+            raise ValueError(
+                f"Chunk {chunk_id} "
+                f"tidak ditemukan pada "
+                f"dokumen '{requested_name}'."
+            )
+
+        # =================================================
+        # SAVE VECTOR STORE
+        # =================================================
+
+        self.store.save()
+
+        return {
+            "filename": requested_name,
+            "chunk_id": chunk_id,
+            "status": "SUCCESS",
+            "message": "Chunk berhasil di-update.",
+            "old_text": result["old_text"],
+            "new_text": result["new_text"]
+        }
+
+
+
+
+        # =====================================================
+    # DELETE CHUNK
+    # =====================================================
+
+    def delete_chunk(
+        self,
+        filename,
+        chunk_id
+    ):
+
+        requested_name = Path(
+            filename
+        ).name
+
+        # Security check
+        if requested_name != filename:
+
+            raise ValueError(
+                "Nama file tidak valid."
+            )
+
+        document_folder = Path(
+            "storage/documents"
+        )
+
+        file_path = (
+            document_folder /
+            requested_name
+        )
+
+        if not file_path.exists():
+
+            raise FileNotFoundError(
+                f"Dokumen tidak ditemukan: "
+                f"{requested_name}"
+            )
+
+        # =================================================
+        # DELETE CHUNK
+        # =================================================
+
+        result = self.store.delete_chunk(
+            filename=requested_name,
+            chunk_id=chunk_id
+        )
+
+        if result is None:
+
+            raise ValueError(
+                f"Chunk {chunk_id} "
+                f"tidak ditemukan pada "
+                f"dokumen '{requested_name}'."
+            )
+
+        # =================================================
+        # SAVE VECTOR STORE
+        # =================================================
+
+        self.store.save()
+
+        return {
+            "filename": requested_name,
+            "chunk_id": chunk_id,
+            "status": "SUCCESS",
+            "message": "Chunk berhasil dihapus.",
+            "deleted_text": result["text"]
+        }
+
+
+
+    
+    
+
+
+
     # =====================================================
     # SEARCH
     # =====================================================

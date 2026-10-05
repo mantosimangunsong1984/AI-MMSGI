@@ -778,6 +778,8 @@ INPUT
         transform 0.1s ease;
 }
 
+
+
 /* ======================================================
    SETTINGS MODAL
 ====================================================== */
@@ -799,9 +801,20 @@ INPUT
     align-items: center;
     justify-content: center;
 
-    z-index: 1000;
+    z-index: 9000;
 
     padding: 20px;
+
+    box-sizing: border-box;
+
+}
+
+
+/* Hidden */
+
+.settings-modal.hidden {
+
+    display: none;
 
 }
 
@@ -962,7 +975,7 @@ INPUT
     font-size: 16px;
     font-weight: 600;
 
-    color: #4b5563;
+    color: #0c4fe2;
 }
 
 /* ======================================================
@@ -1311,3 +1324,1173 @@ INPUT
     display: none;
 }
 
+
+
+/* ======================================================
+   DOCUMENT ACTIONS
+====================================================== */
+
+.document-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+
+/* ======================================================
+   VIEW CHUNKS BUTTON
+====================================================== */
+
+.document-chunks-button {
+    height: 32px;
+    padding: 0 11px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    background: white;
+    color: #374151;
+    font-size: 12px;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.document-chunks-button:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    color: #0F62FE;
+}
+
+.document-chunks-button:active {
+    transform: scale(0.97);
+}
+
+
+/* ======================================================
+   CHUNKS MODAL
+====================================================== */
+
+.chunks-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.35);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 9500 !important;
+
+    padding: 20px;
+}
+
+
+/* ======================================================
+   CHUNKS PANEL
+====================================================== */
+
+.chunks-panel {
+    width: min(900px, 95vw);
+    max-height: 88vh;
+
+    background: white;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 15px 50px rgba(0, 0, 0, 0.20);
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+
+/* ======================================================
+   CHUNKS HEADER
+====================================================== */
+
+.chunks-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 20px 24px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.chunks-modal-title {
+    max-width: 750px;
+
+    margin-bottom: 3px;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    color: #1f2937;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.chunks-header small {
+    color: #777;
+    font-size: 12px;
+}
+
+
+/* ======================================================
+   CHUNKS CLOSE
+====================================================== */
+
+.chunks-close {
+    flex-shrink: 0;
+
+    width: 34px;
+    height: 34px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #666;
+
+    font-size: 25px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+.chunks-close:hover {
+    background: #f1f5f9;
+    color: #222;
+}
+
+
+/* ======================================================
+   CHUNKS CONTENT
+====================================================== */
+
+.chunks-content {
+    padding: 20px 24px;
+
+    overflow-y: auto;
+
+    min-height: 150px;
+}
+
+
+/* ======================================================
+   CHUNKS SUMMARY
+====================================================== */
+
+.chunks-summary {
+    margin-bottom: 14px;
+
+    padding: 10px 12px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+
+    background: #f8fafc;
+
+    color: #666;
+
+    font-size: 12px;
+}
+
+.chunks-summary strong {
+    color: #1f2937;
+}
+
+
+/* ======================================================
+   CHUNKS LIST
+====================================================== */
+
+.chunks-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+/* ======================================================
+   CHUNK ITEM
+====================================================== */
+
+.chunk-item {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+
+    background: white;
+
+    overflow: hidden;
+}
+
+.chunk-item:hover {
+    border-color: #d1d5db;
+}
+
+
+/* ======================================================
+   CHUNK HEADER
+====================================================== */
+
+.chunk-item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 10px 12px;
+
+    background: #f8fafc;
+
+    border-bottom: 1px solid #edf0f3;
+}
+
+.chunk-item-header strong {
+    color: #1f2937;
+    font-size: 13px;
+}
+
+
+/* ======================================================
+   CHUNK ACTIONS
+====================================================== */
+
+.chunk-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+
+    flex-shrink: 0;
+}
+
+
+/* ======================================================
+   CHUNK BUTTON BASE
+====================================================== */
+
+.chunk-view-button,
+.chunk-edit-button,
+.chunk-delete-button {
+    height: 30px;
+
+    padding: 0 10px;
+
+    border-radius: 6px;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.1s ease;
+}
+
+
+/* ======================================================
+   VIEW
+====================================================== */
+
+.chunk-view-button {
+    border: 1px solid #d1d5db;
+
+    background: white;
+
+    color: #374151;
+}
+
+.chunk-view-button:hover {
+    background: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+
+/* ======================================================
+   EDIT
+====================================================== */
+
+.chunk-edit-textarea {
+    width: 100%;
+    min-height: 300px;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.6;
+    font-family: inherit;
+    resize: vertical;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.chunk-edit-textarea:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+/* ======================================================
+   DELETE CHUNK
+====================================================== */
+
+.chunk-delete-button {
+    border: 1px solid #fecaca;
+
+    background: #fef2f2;
+
+    color: #dc2626;
+}
+
+.chunk-delete-button:hover {
+    background: #fee2e2;
+    border-color: #fca5a5;
+}
+
+
+/* ======================================================
+   BUTTON ACTIVE
+====================================================== */
+
+.chunk-view-button:active,
+.chunk-edit-button:active,
+.chunk-delete-button:active {
+    transform: scale(0.96);
+}
+
+
+/* ======================================================
+   CHUNK TEXT PREVIEW
+====================================================== */
+
+.chunk-text-preview {
+    padding: 14px;
+
+    color: #4b5563;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    white-space: pre-wrap;
+
+    word-break: break-word;
+
+    max-height: 180px;
+
+    overflow-y: auto;
+}
+
+
+/* ======================================================
+   CHUNKS FOOTER
+====================================================== */
+
+.chunks-footer {
+    display: flex;
+
+    justify-content: flex-end;
+
+    padding: 14px 24px;
+
+    border-top: 1px solid #e5e7eb;
+
+    background: #fafafa;
+}
+
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+
+@media (max-width: 700px) {
+
+    .chunks-panel {
+        width: 95vw;
+        max-height: 92vh;
+    }
+
+    .chunks-header {
+        padding: 16px;
+    }
+
+    .chunks-content {
+        padding: 16px;
+    }
+
+    .chunks-footer {
+        padding: 12px 16px;
+    }
+
+    .chunk-item-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .chunk-actions {
+        width: 100%;
+    }
+
+    .chunk-view-button,
+    .chunk-edit-button,
+    .chunk-delete-button {
+        flex: 1;
+    }
+
+    .document-actions {
+        gap: 4px;
+    }
+
+    .document-chunks-button {
+        padding: 0 8px;
+    }
+
+}
+
+
+/* ======================================================
+   EDIT CHUNK MODAL
+   ====================================================== */
+
+.chunk-edit-overlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 100000;
+
+    padding: 30px;
+
+    box-sizing: border-box;
+}
+
+
+.chunk-edit-modal {
+    width: min(900px, 95vw);
+
+    max-height: 90vh;
+
+    background: #ffffff;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.25);
+
+    display: flex;
+
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+
+/* HEADER */
+
+.chunk-edit-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 18px 22px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+.chunk-edit-header h3 {
+    margin: 0 0 4px 0;
+
+    font-size: 18px;
+
+    font-weight: 600;
+}
+
+
+.chunk-edit-header small {
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+
+.chunk-edit-close {
+    border: none;
+
+    background: transparent;
+
+    font-size: 28px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    color: #6b7280;
+
+    padding: 4px 8px;
+}
+
+
+.chunk-edit-close:hover {
+    color: #111827;
+}
+
+
+/* BODY */
+
+.chunk-edit-body {
+    padding: 20px 22px;
+
+    overflow-y: auto;
+}
+
+
+.chunk-edit-body label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #374151;
+}
+
+
+/* TEXTAREA */
+
+.chunk-edit-textarea {
+    display: block;
+
+    width: 100%;
+
+    min-height: 400px;
+
+    max-height: 60vh;
+
+    box-sizing: border-box;
+
+    padding: 14px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #111827;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    resize: vertical;
+
+    outline: none;
+}
+
+
+.chunk-edit-textarea:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 2px rgba(
+            37,
+            99,
+            235,
+            0.12
+        );
+}
+
+
+/* FOOTER */
+
+.chunk-edit-footer {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    padding: 16px 22px;
+
+    border-top: 1px solid #e5e7eb;
+
+    background: #f9fafb;
+}
+
+
+.chunk-edit-cancel,
+.chunk-edit-save {
+    padding: 9px 18px;
+
+    border-radius: 7px;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+
+.chunk-edit-cancel {
+    background: #ffffff;
+
+    border: 1px solid #d1d5db;
+
+    color: #374151;
+}
+
+
+.chunk-edit-save {
+    background: #2563eb;
+
+    border: 1px solid #2563eb;
+
+    color: #ffffff;
+}
+
+
+.chunk-edit-save:hover {
+    opacity: 0.9;
+}
+
+
+.chunk-edit-save:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+}
+
+
+/* ======================================================
+   VIEW CHUNK MODAL
+   ====================================================== */
+
+.chunk-view-overlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 100000;
+
+    padding: 30px;
+
+    box-sizing: border-box;
+}
+
+
+.chunk-view-modal {
+    width: min(900px, 95vw);
+
+    max-height: 90vh;
+
+    background: #ffffff;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.25);
+
+    display: flex;
+
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+
+/* HEADER */
+
+.chunk-view-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 18px 22px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+.chunk-view-header h3 {
+    margin: 0 0 4px 0;
+
+    font-size: 18px;
+
+    font-weight: 600;
+}
+
+
+.chunk-view-header small {
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+
+.chunk-view-close {
+    border: none;
+
+    background: transparent;
+
+    font-size: 28px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    color: #6b7280;
+
+    padding: 4px 8px;
+}
+
+
+.chunk-view-close:hover {
+    color: #111827;
+}
+
+
+/* BODY */
+
+.chunk-view-body {
+    padding: 20px 22px;
+
+    overflow-y: auto;
+}
+
+
+.chunk-view-body label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #374151;
+}
+
+
+/* TEXT */
+
+.chunk-view-text {
+    display: block;
+
+    width: 100%;
+
+    min-height: 400px;
+
+    max-height: 60vh;
+
+    box-sizing: border-box;
+
+    padding: 14px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 8px;
+
+    background: #f9fafb;
+
+    color: #111827;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    white-space: pre-wrap;
+
+    overflow-y: auto;
+}
+
+
+/* FOOTER */
+
+.chunk-view-footer {
+    display: flex;
+
+    justify-content: flex-end;
+
+    padding: 16px 22px;
+
+    border-top: 1px solid #e5e7eb;
+
+    background: #f9fafb;
+}
+
+
+.chunk-view-close-button {
+    padding: 9px 18px;
+
+    border-radius: 7px;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    background: #ffffff;
+
+    border: 1px solid #d1d5db;
+
+    color: #374151;
+}
+
+
+.chunk-view-close-button:hover {
+    background: #f3f4f6;
+
+    border-color: #9ca3af;
+}
+
+
+/* ======================================================
+   SETTINGS MODAL
+   SAME SIZE AS VIEW / EDIT
+   ====================================================== */
+
+.settings-modal {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 99998;
+
+    padding: 30px;
+
+    box-sizing: border-box;
+}
+
+
+/* ======================================================
+   HIDDEN
+   ====================================================== */
+
+.settings-modal.hidden {
+    display: none;
+}
+
+
+/* ======================================================
+   SETTINGS PANEL
+   ====================================================== */
+
+.settings-panel {
+    width: min(900px, 95vw);
+
+    max-height: 90vh;
+
+    background: #ffffff;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.25);
+
+    display: flex;
+
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+
+/* ======================================================
+   HEADER
+   ====================================================== */
+
+.settings-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 18px 22px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    flex-shrink: 0;
+}
+
+
+.settings-header h2 {
+    margin: 0 0 4px 0;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    color: #111827;
+}
+
+
+.settings-header small {
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+
+/* ======================================================
+   CLOSE BUTTON
+   ====================================================== */
+
+.settings-close {
+    border: none;
+
+    background: transparent;
+
+    font-size: 28px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    color: #6b7280;
+
+    padding: 4px 8px;
+}
+
+
+.settings-close:hover {
+    color: #111827;
+}
+
+
+/* ======================================================
+   CONTENT
+   ====================================================== */
+
+.settings-content {
+    padding: 20px 22px;
+
+    overflow-y: auto;
+
+    flex: 1;
+}
+
+
+/* ======================================================
+   SETTINGS SECTION
+   ====================================================== */
+
+.settings-section {
+    margin-bottom: 24px;
+}
+
+
+.settings-section h3 {
+    margin: 0 0 6px 0;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    color: #111827;
+}
+
+
+.settings-description {
+    margin: 0 0 12px 0;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    color: #6b7280;
+}
+
+
+/* ======================================================
+   MODEL SELECT
+   ====================================================== */
+
+.settings-model-select {
+    width: 100%;
+
+    min-height: 42px;
+
+    padding: 9px 12px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #111827;
+
+    font-size: 14px;
+
+    font-family: inherit;
+
+    outline: none;
+
+    box-sizing: border-box;
+}
+
+
+.settings-model-select:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 2px rgba(
+            37,
+            99,
+            235,
+            0.12
+        );
+}
+
+/* ======================================================
+   MODAL STACKING ORDER
+====================================================== */
+
+.settings-modal {
+    z-index: 9000 !important;
+}
+
+.chunk-edit-overlay,
+.chunk-view-overlay {
+    z-index: 100000 !important;
+}
+
+/* ======================================================
+   CHUNK MODAL - ABOVE SETTINGS
+====================================================== */
+
+.chunk-edit-overlay {
+    position: fixed !important;
+
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+
+    width: 100vw !important;
+    height: 100vh !important;
+
+    z-index: 999999 !important;
+}
+
+
+.chunk-view-overlay {
+    position: fixed !important;
+
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+
+    width: 100vw !important;
+    height: 100vh !important;
+
+    z-index: 999998 !important;
+}
+
+
+/* ======================================================
+   EDIT CHUNK - FORCE ABOVE SETTINGS
+   ====================================================== */
+
+.chunk-edit-overlay {
+    position: fixed !important;
+
+    inset: 0 !important;
+
+    z-index: 999999 !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+
+    justify-content: center !important;
+}
+
+.chunk-view-overlay {
+    pointer-events: auto !important;
+}
+
+.chunk-view-modal {
+    pointer-events: auto !important;
+}
+
+.chunk-view-close,
+.chunk-view-close-button {
+    pointer-events: auto !important;
+    position: relative;
+    z-index: 10;
+}
+
+
+/* ======================================================
+   CHUNKS MODAL - CLICK FIX
+   ====================================================== */
+
+#chunks-modal {
+    pointer-events: auto !important;
+}
+
+#chunks-modal .chunks-panel {
+    pointer-events: auto !important;
+}
+
+#chunks-modal .chunks-close,
+#chunks-modal #chunks-modal-close,
+#chunks-modal #chunks-modal-close-bottom {
+    position: relative !important;
+    z-index: 100000 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}

@@ -4682,3 +4682,541 @@ class VectorStore:
         return (
             self.index.ntotal == 0
         )
+
+
+        # ==========================================================
+    # CHUNK CRUD - VIEW
+    # ==========================================================
+
+    def get_document_chunks(self, filename=None):
+        """
+        Mengambil daftar chunk berdasarkan filename.
+
+        Returns:
+            list[dict]: daftar metadata chunk
+        """
+
+        if not self.metadata:
+            return []
+
+        results = []
+
+        target_filename = None
+
+        if filename:
+            target_filename = str(filename).strip().lower()
+
+        for position, metadata in enumerate(self.metadata):
+
+            current_filename = str(
+                metadata.get("filename", "")
+            ).strip().lower()
+
+            if target_filename and current_filename != target_filename:
+                continue
+
+            chunk = metadata.copy()
+
+            # Posisi vector di FAISS
+            chunk["vector_position"] = position
+
+            # Pastikan chunk_id tersedia
+            chunk["chunk_id"] = metadata.get("chunk_id")
+
+            results.append(chunk)
+
+        # Urutkan berdasarkan chunk_id
+        results.sort(
+            key=lambda x: (
+                x.get("chunk_id") is None,
+                x.get("chunk_id", 0)
+            )
+        )
+
+        return results
+
+
+    ############################################################
+
+
+    def get_chunk(self, filename, chunk_id):
+    
+        target_filename = str(filename).strip().lower()
+        target_chunk_id = str(chunk_id).strip()
+
+        for position, metadata in enumerate(self.metadata):
+
+            current_filename = str(
+                metadata.get("filename", "")
+            ).strip().lower()
+
+            current_chunk_id = str(
+                metadata.get("chunk_id", "")
+            ).strip()
+
+            if (
+                current_filename == target_filename
+                and current_chunk_id == target_chunk_id
+            ):
+                chunk = metadata.copy()
+
+                chunk["vector_position"] = position
+
+                return chunk
+
+        return None
+
+
+
+        # ==========================================================
+    # CHUNK CRUD - EDIT
+    # ==========================================================
+
+    def update_chunk(
+        self,
+        filename,
+        chunk_id,
+        new_text,
+        embedding_service
+    ):
+        """
+        Edit text sebuah chunk.
+
+        Identifier:
+            filename + chunk_id
+
+        Proses:
+            1. Cari chunk
+            2. Generate embedding baru
+            3. Update metadata
+            4. Rebuild FAISS index
+
+        Returns:
+            dict | None
+        """
+
+        # ------------------------------------------------------
+        # VALIDASI INPUT
+        # ------------------------------------------------------
+
+        target_filename = str(
+            filename
+        ).strip().lower()
+
+        target_chunk_id = str(
+            chunk_id
+        ).strip()
+
+        new_text = str(
+            new_text
+        ).strip()
+
+        if not new_text:
+            raise ValueError(
+                "Text chunk tidak boleh kosong."
+            )
+
+        # ------------------------------------------------------
+        # CARI CHUNK
+        # ------------------------------------------------------
+
+        target_position = None
+
+        for position, metadata in enumerate(
+            self.metadata
+        ):
+
+            current_filename = str(
+                metadata.get(
+                    "filename",
+                    ""
+                )
+            ).strip().lower()
+
+            current_chunk_id = str(
+                metadata.get(
+                    "chunk_id",
+                    ""
+                )
+            ).strip()
+
+            if (
+                current_filename == target_filename
+                and current_chunk_id == target_chunk_id
+            ):
+                target_position = position
+                break
+
+        # ------------------------------------------------------
+        # CHUNK TIDAK DITEMUKAN
+        # ------------------------------------------------------
+
+        if target_position is None:
+
+            print(
+                "Chunk tidak ditemukan:",
+                filename,
+                "chunk_id:",
+                chunk_id
+            )
+
+            return None
+
+        # ------------------------------------------------------
+        # GENERATE EMBEDDING BARU
+        # ------------------------------------------------------
+
+        print(
+            "Generating new embedding..."
+        )
+
+        new_embedding = embedding_service.embed(
+            new_text
+        )
+
+        new_embedding = np.asarray(
+            new_embedding,
+            dtype=np.float32
+        ).reshape(-1)
+
+        # ------------------------------------------------------
+        # VALIDASI DIMENSION
+        # ------------------------------------------------------
+
+        if new_embedding.shape[0] != self.dimension:
+
+            raise ValueError(
+                f"Embedding dimension tidak sesuai. "
+                f"Expected {self.dimension}, "
+                f"got {new_embedding.shape[0]}"
+            )
+
+        # ------------------------------------------------------
+        # NORMALISASI
+        # ------------------------------------------------------
+
+        new_embedding = new_embedding.reshape(
+            1,
+            -1
+        )
+
+        faiss.normalize_L2(
+            new_embedding
+        )
+
+        new_embedding = new_embedding[0]
+
+        # ------------------------------------------------------
+        # UPDATE METADATA
+        # ------------------------------------------------------
+
+        old_text = self.metadata[
+            target_position
+        ].get(
+            "text",
+            ""
+        )
+
+        self.metadata[
+            target_position
+        ]["text"] = new_text
+
+        # ------------------------------------------------------
+        # REBUILD FAISS INDEX
+        # ------------------------------------------------------
+
+        new_index = faiss.IndexFlatIP(
+            self.dimension
+        )
+
+        vectors = []
+
+        for position in range(
+            len(self.metadata)
+        ):
+
+            if position == target_position:
+
+                vector = new_embedding
+
+            else:
+
+                vector = self.index.reconstruct(
+                    position
+                )
+
+            vector = np.asarray(
+                vector,
+                dtype=np.float32
+            ).reshape(1, -1)
+
+            faiss.normalize_L2(
+                vector
+            )
+
+            vectors.append(
+                vector[0]
+            )
+
+        # ------------------------------------------------------
+        # ADD ALL VECTOR
+        # ------------------------------------------------------
+
+        if vectors:
+
+            vectors = np.asarray(
+                vectors,
+                dtype=np.float32
+            )
+
+            new_index.add(
+                vectors
+            )
+
+        # ------------------------------------------------------
+        # VALIDASI
+        # ------------------------------------------------------
+
+        if (
+            new_index.ntotal
+            != len(self.metadata)
+        ):
+
+            raise RuntimeError(
+                "FAISS index dan metadata "
+                "tidak sinkron setelah update chunk."
+            )
+
+        # ------------------------------------------------------
+        # REPLACE INDEX
+        # ------------------------------------------------------
+
+        self.index = new_index
+
+        print(
+            "Chunk berhasil di-update:"
+        )
+
+        print(
+            "Filename :",
+            filename
+        )
+
+        print(
+            "Chunk ID  :",
+            chunk_id
+        )
+
+        print(
+            "Vector position :",
+            target_position
+        )
+
+        return {
+            "filename": self.metadata[
+                target_position
+            ].get("filename"),
+
+            "chunk_id": self.metadata[
+                target_position
+            ].get("chunk_id"),
+
+            "old_text": old_text,
+
+            "new_text": new_text,
+
+            "vector_position": target_position
+        }
+
+
+        # ==========================================================
+    # CHUNK CRUD - DELETE
+    # ==========================================================
+
+    def delete_chunk(
+        self,
+        filename,
+        chunk_id
+    ):
+        """
+        Menghapus satu chunk berdasarkan:
+            filename + chunk_id
+
+        Returns:
+            dict | None
+        """
+
+        target_filename = str(
+            filename
+        ).strip().lower()
+
+        target_chunk_id = str(
+            chunk_id
+        ).strip()
+
+        target_position = None
+
+        # ------------------------------------------------------
+        # CARI CHUNK
+        # ------------------------------------------------------
+
+        for position, metadata in enumerate(
+            self.metadata
+        ):
+
+            current_filename = str(
+                metadata.get(
+                    "filename",
+                    ""
+                )
+            ).strip().lower()
+
+            current_chunk_id = str(
+                metadata.get(
+                    "chunk_id",
+                    ""
+                )
+            ).strip()
+
+            if (
+                current_filename == target_filename
+                and current_chunk_id == target_chunk_id
+            ):
+                target_position = position
+                break
+
+        # ------------------------------------------------------
+        # TIDAK DITEMUKAN
+        # ------------------------------------------------------
+
+        if target_position is None:
+
+            print(
+                "Chunk tidak ditemukan:",
+                filename,
+                "chunk_id:",
+                chunk_id
+            )
+
+            return None
+
+        # ------------------------------------------------------
+        # SIMPAN INFO CHUNK
+        # ------------------------------------------------------
+
+        deleted_metadata = self.metadata[
+            target_position
+        ].copy()
+
+        # ------------------------------------------------------
+        # REBUILD INDEX + METADATA
+        # ------------------------------------------------------
+
+        new_index = faiss.IndexFlatIP(
+            self.dimension
+        )
+
+        new_metadata = []
+
+        vectors = []
+
+        for position, metadata in enumerate(
+            self.metadata
+        ):
+
+            # Skip chunk yang akan dihapus
+            if position == target_position:
+                continue
+
+            vector = self.index.reconstruct(
+                position
+            )
+
+            vector = np.asarray(
+                vector,
+                dtype=np.float32
+            ).reshape(1, -1)
+
+            faiss.normalize_L2(
+                vector
+            )
+
+            vectors.append(
+                vector[0]
+            )
+
+            new_metadata.append(
+                metadata.copy()
+            )
+
+        # ------------------------------------------------------
+        # ADD VECTOR
+        # ------------------------------------------------------
+
+        if vectors:
+
+            vectors = np.asarray(
+                vectors,
+                dtype=np.float32
+            )
+
+            new_index.add(
+                vectors
+            )
+
+        # ------------------------------------------------------
+        # VALIDASI
+        # ------------------------------------------------------
+
+        if (
+            new_index.ntotal
+            != len(new_metadata)
+        ):
+
+            raise RuntimeError(
+                "FAISS index dan metadata "
+                "tidak sinkron setelah delete chunk."
+            )
+
+        # ------------------------------------------------------
+        # REPLACE
+        # ------------------------------------------------------
+
+        self.index = new_index
+        self.metadata = new_metadata
+
+        print(
+            "Chunk berhasil dihapus:"
+        )
+
+        print(
+            "Filename :",
+            filename
+        )
+
+        print(
+            "Chunk ID  :",
+            chunk_id
+        )
+
+        print(
+            "Vector position :",
+            target_position
+        )
+
+        return {
+            "filename": deleted_metadata.get(
+                "filename"
+            ),
+
+            "chunk_id": deleted_metadata.get(
+                "chunk_id"
+            ),
+
+            "text": deleted_metadata.get(
+                "text"
+            ),
+
+            "vector_position": target_position
+        }
+
